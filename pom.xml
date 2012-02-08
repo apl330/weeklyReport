@@ -21,6 +21,17 @@
 		<maven.db.skip>false</maven.db.skip>
 
 		<!-- Database settings -->
+		<hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
+		<hibernate.query.substitutions>true 'Y', false 'N'</hibernate.query.substitutions>
+		<hibernate.cache.provider_class>org.hibernate.cache.EhCacheProvider</hibernate.cache.provider_class>
+		<hibernate.cache.use_query_cache>true</hibernate.cache.use_query_cache>
+		<hibernate.cache.use_second_level_cache>true</hibernate.cache.use_second_level_cache>
+		<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+		<hibernate.show_sql>false</hibernate.show_sql>
+		<hibernate.format_sql>true</hibernate.format_sql>
+		<hibernate.connection.autocommit>false</hibernate.connection.autocommit>
+		<hibernate.use.sql.comments>true</hibernate.use.sql.comments>
+		<h2.activeByDefault>false</h2.activeByDefault>
 		<db.type>h2</db.type>
 		<db.host>localhost</db.host>
 		<db.name>${app.name}</db.name>
@@ -52,8 +63,9 @@
 
 		<upload.path>/tmp/${app.name}</upload.path>
 		<java.tools.jar>${env.JAVA_HOME}/lib/tools.jar</java.tools.jar>
-	
-	<!--    依赖、插件仓储    -->
+	</properties>
+
+	<!-- 依赖、插件仓储 -->
 	<repositories>
 		<repository>
 			<id>dayatang-releases</id>
@@ -76,6 +88,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>dayatang-releases</id>
@@ -98,687 +111,550 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
+
+
 	<!-- 依赖管理 -->
-	<dependencyManagement>
-		<dependencies>
-
-			<!-- Specification -->
-			<dependency>
-				<groupId>javax.persistence</groupId>
-				<artifactId>persistence-api</artifactId>
-				<version>2.0</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.validation</groupId>
-				<artifactId>validation-api</artifactId>
-				<version>1.0.0.GA</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>2.5</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet.jsp</groupId>
-				<artifactId>jsp-api</artifactId>
-				<version>2.2</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<!-- Hibernate -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator</artifactId>
-				<version>4.2.0.Final</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-c3p0</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-ehcache</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-
-			<!-- spring -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-expression</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-
-			<!-- Spring Security -->
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-core</artifactId>
-				<version>${spring.security.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-web</artifactId>
-				<version>${spring.security.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-cas</artifactId>
-				<version>${spring.security.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-config</artifactId>
-				<version>${spring.security.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-taglibs</artifactId>
-				<version>${spring.security.version}</version>
-			</dependency>
-
-			<!-- Struts 2 -->
-			<dependency>
-				<groupId>org.apache.struts</groupId>
-				<artifactId>struts2-core</artifactId>
-				<version>${struts2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.struts</groupId>
-				<artifactId>struts2-sitemesh-plugin</artifactId>
-				<version>${struts2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.struts</groupId>
-				<artifactId>struts2-spring-plugin</artifactId>
-				<version>${struts2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.struts</groupId>
-				<artifactId>struts2-convention-plugin</artifactId>
-				<version>${struts2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.struts</groupId>
-				<artifactId>struts2-config-browser-plugin</artifactId>
-				<version>${struts2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.struts</groupId>
-				<artifactId>struts2-json-plugin</artifactId>
-				<version>${struts2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.jgeppert.struts2.jquery</groupId>
-				<artifactId>struts2-jquery-plugin</artifactId>
-				<version>3.2.1</version>
-			</dependency>
-			<dependency>
-				<groupId>com.jgeppert.struts2.jquery</groupId>
-				<artifactId>struts2-jquery-grid-plugin</artifactId>
-				<version>3.2.1</version>
-			</dependency>
-
-			<!-- dayatang-commons -->
-			<dependency>
-				<groupId>com.dayatang.commons</groupId>
-				<artifactId>dayatang-commons-utils</artifactId>
-				<version>${dayatang.commons.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.dayatang.commons</groupId>
-				<artifactId>dayatang-commons-domain</artifactId>
-				<version>${dayatang.commons.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.dayatang.commons</groupId>
-				<artifactId>dayatang-commons-spring</artifactId>
-				<version>${dayatang.commons.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.dayatang.commons</groupId>
-				<artifactId>dayatang-commons-db</artifactId>
-				<version>${dayatang.commons.version}</version>
-			</dependency>
-
-			<!-- other -->
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>3.1</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>1.4</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-fileupload</groupId>
-				<artifactId>commons-fileupload</artifactId>
-				<version>1.2.2</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>jcl-over-slf4j</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>log4j-over-slf4j</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>uk.ltd.getahead</groupId>
-				<artifactId>dwr</artifactId>
-				<version>1.1.1</version>
-			</dependency>
-			<dependency>
-				<groupId>javassist</groupId>
-				<artifactId>javassist</artifactId>
-				<version>3.12.1.GA</version>
-			</dependency>
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
-				<version>1.6.12</version>
-			</dependency>
-			<dependency>
-				<groupId>${jdbc.groupId}</groupId>
-				<artifactId>${jdbc.artifactId}</artifactId>
-				<version>${jdbc.version}</version>
-			</dependency>
-
-			<!-- Test -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.10</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-core</artifactId>
-				<version>1.8.5</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.dayatang.commons</groupId>
-				<artifactId>dayatang-commons-spring-test</artifactId>
-				<version>${dayatang.commons.version}</version>
-				<scope>test</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 	<dependencies>
+
+		<!-- Specification -->
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>2.0</version>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.2.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<!-- Struts 2 -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>${struts2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-sitemesh-plugin</artifactId>
+			<version>${struts2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-spring-plugin</artifactId>
+			<version>${struts2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-convention-plugin</artifactId>
+			<version>${struts2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-config-browser-plugin</artifactId>
+			<version>${struts2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<version>${struts2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jgeppert.struts2.jquery</groupId>
+			<artifactId>struts2-jquery-plugin</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jgeppert.struts2.jquery</groupId>
+			<artifactId>struts2-jquery-grid-plugin</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
+		<!-- dayatang-commons -->
+		<dependency>
+			<groupId>com.dayatang.commons</groupId>
+			<artifactId>dayatang-commons-utils</artifactId>
+			<version>${dayatang.commons.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dayatang.commons</groupId>
-			<artifactId>dayatang-commons-spring-test</artifactId>
+			<artifactId>dayatang-commons-domain</artifactId>
+			<version>${dayatang.commons.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dayatang.commons</groupId>
+			<artifactId>dayatang-commons-spring</artifactId>
+			<version>${dayatang.commons.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dayatang.commons</groupId>
+			<artifactId>dayatang-commons-db</artifactId>
+			<version>${dayatang.commons.version}</version>
+		</dependency>
+
+		<!-- other -->
+		<dependency>
+			<groupId>displaytag</groupId>
+			<artifactId>displaytag</artifactId>
+			<version>1.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jcl104-over-slf4j</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.ltd.getahead</groupId>
+			<artifactId>dwr</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.12</version>
+		</dependency>
+		<dependency>
+			<groupId>${jdbc.groupId}</groupId>
+			<artifactId>${jdbc.artifactId}</artifactId>
+			<version>${jdbc.version}</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.dayatang.commons</groupId>
+			<artifactId>dayatang-commons-spring-test</artifactId>
+			<version>${dayatang.commons.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
-	<!--     插件管理 -->
+
+
+	<!-- 插件管理 -->
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>com.dayatang.mojo.hibernate3</groupId>
-										<artifactId>hibernate3-maven-plugin</artifactId>
-										<versionRange>[0,)</versionRange>
-										<goals>
-											<goal>hbm2ddl</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>dbunit-maven-plugin</artifactId>
-										<versionRange>[0,)</versionRange>
-										<goals>
-											<goal>operation</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>native2ascii-maven-plugin</artifactId>
-										<versionRange>[0,)</versionRange>
-										<goals>
-											<goal>native2ascii</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.3.2</version>
-					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
-						<encoding>${charset}</encoding>
-						<fork>true</fork>
-						<meminitial>128m</meminitial>
-						<maxmem>768m</maxmem>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<version>2.3</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.5</version>
-					<configuration>
-						<encoding>${charset}</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.11</version>
-					<configuration>
-						<encoding>${charset}</encoding>
-						<charset>${charset}</charset>
-						<includes>
-							<include>**/*Test.java</include>
-						</includes>
-						<excludes>
-							<exclude>**/Abstract*.java</exclude>
-						</excludes>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.3.2</version>
-					<configuration>
-						<archive>
-							<addMavenDescriptor>false</addMavenDescriptor>
-							<index>false</index>
-							<manifest>
-								<addClasspath>true</addClasspath>
-								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							</manifest>
-						</archive>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<version>2.2.2</version>
-					<configuration>
-						<descriptorRefs>
-							<descriptorRef>jar-with-dependencies</descriptorRef>
-							<descriptorRef>bin</descriptorRef>
-							<descriptorRef>src</descriptorRef>
-							<descriptorRef>project</descriptorRef>
-						</descriptorRefs>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.felix</groupId>
-					<artifactId>maven-bundle-plugin</artifactId>
-					<version>2.3.6</version>
-					<extensions>true</extensions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.0</version>
-					<configuration>
-						<locales>zh_CN</locales>
-						<inputEncoding>${charset}</inputEncoding>
-						<outputEncoding>${charset}</outputEncoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.2.1</version>
-					<configuration>
-						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<username>${scm.username}</username>
-						<password>${scm.password}</password>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.1.2</version>
-					<configuration>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>com.dayatang.mojo.hibernate3</groupId>
-					<artifactId>hibernate3-maven-plugin</artifactId>
-					<version>2.4</version>
-					<configuration>
-						<components>
-							<component>
-								<name>hbm2ddl</name>
-								<implementation>annotationconfiguration</implementation>
-							</component>
-						</components>
-						<componentProperties>
-							<update>true</update>
-							<create>true</create>
-							<jdk5>true</jdk5>
-							<scan-classes>true</scan-classes>
-							<scan-jars>true</scan-jars>
-							<configurationfile>target/test-classes/hibernate.cfg.xml</configurationfile>
-							<skip>${maven.db.skip}</skip>
-						</componentProperties>
-					</configuration>
-					<executions>
-						<execution>
-							<id>create-schema</id>
-							<phase>test-compile</phase>
-							<goals>
-								<goal>hbm2ddl</goal>
-							</goals>
-						</execution>
-					</executions>
-					<dependencies>
-						<dependency>
-							<groupId>${jdbc.groupId}</groupId>
-							<artifactId>${jdbc.artifactId}</artifactId>
-							<version>${jdbc.version}</version>
-						</dependency>
-						<dependency>
-							<groupId>net.sourceforge.cobertura</groupId>
-							<artifactId>cobertura</artifactId>
-							<version>1.9.4.1</version>
-						</dependency>
-						<dependency>
-							<groupId>org.hibernate</groupId>
-							<artifactId>hibernate-validator</artifactId>
-							<version>4.2.0.Final</version>
-						</dependency>
-					</dependencies>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>dbunit-maven-plugin</artifactId>
-					<version>1.0-beta-3</version>
-					<configuration>
-						<dataTypeFactoryName>${dbunit.dataTypeFactoryName}</dataTypeFactoryName>
-						<driver>${jdbc.driverClassName}</driver>
-						<url>${jdbc.url}</url>
-						<username>${jdbc.username}</username>
-						<password>${jdbc.password}</password>
-						<schema>${dbunit.schema}</schema>
-						<skip>${maven.db.skip}</skip>
-						<src>src/test/resources/sample-data.xml</src>
-						<type>${dbunit.operation.type}</type>
-						<ordered>true</ordered>
-						<format>flat</format>
-						<encoding>${charset}</encoding>
-						<doctype>dataset.dtd</doctype>
-					</configuration>
-					<executions>
-						<execution>
-							<id>fill-test-data</id>
-							<phase>integration-test</phase>
-							<goals>
-								<goal>operation</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>export</id>
-							<goals>
-								<goal>export</goal>
-							</goals>
-							<configuration>
-								<doctype>${basedir}/target/dbunit/dataset.dtd</doctype>
-							</configuration>
-						</execution>
-					</executions>
-					<dependencies>
-						<dependency>
-							<groupId>${jdbc.groupId}</groupId>
-							<artifactId>${jdbc.artifactId}</artifactId>
-							<version>${jdbc.version}</version>
-						</dependency>
-					</dependencies>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+					<path>/${cargo.context}</path>
+					<port>${cargo.port}</port>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.0.RC5</version>
+				<configuration>
+					<path>/${cargo.context}</path>
+					<port>${cargo.port}</port>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<lifecycleMappingMetadata>
+						<pluginExecutions>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>com.dayatang.mojo.hibernate3</groupId>
+									<artifactId>hibernate3-maven-plugin</artifactId>
+									<versionRange>[0,)</versionRange>
+									<goals>
+										<goal>hbm2ddl</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore />
+								</action>
+							</pluginExecution>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>org.codehaus.mojo</groupId>
+									<artifactId>dbunit-maven-plugin</artifactId>
+									<versionRange>[0,)</versionRange>
+									<goals>
+										<goal>operation</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore />
+								</action>
+							</pluginExecution>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>org.codehaus.mojo</groupId>
+									<artifactId>native2ascii-maven-plugin</artifactId>
+									<versionRange>[0,)</versionRange>
+									<goals>
+										<goal>native2ascii</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore />
+								</action>
+							</pluginExecution>
+						</pluginExecutions>
+					</lifecycleMappingMetadata>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>${charset}</encoding>
+					<fork>true</fork>
+					<meminitial>128m</meminitial>
+					<maxmem>768m</maxmem>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<encoding>${charset}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.11</version>
+				<configuration>
+					<encoding>${charset}</encoding>
+					<charset>${charset}</charset>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/Abstract*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+						<index>false</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.2</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+						<descriptorRef>bin</descriptorRef>
+						<descriptorRef>src</descriptorRef>
+						<descriptorRef>project</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.3.6</version>
+				<extensions>true</extensions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
 				<configuration>
-					<reportPlugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-project-info-reports-plugin</artifactId>
-							<version>2.4</version>
-							<configuration>
-								<encoding>${charset}</encoding>
-								<charset>${charset}</charset>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-javadoc-plugin</artifactId>
-							<version>2.8</version>
-							<configuration>
-								<encoding>${charset}</encoding>
-								<charset>${charset}</charset>
-								<minmemory>128m</minmemory>
-								<maxmemory>1024m</maxmemory>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-jxr-plugin</artifactId>
-							<version>2.3</version>
-							<configuration>
-								<inputEncoding>${charset}</inputEncoding>
-								<outputEncoding>${charset}</outputEncoding>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-surefire-report-plugin</artifactId>
-							<version>2.11</version>
-							<configuration>
-								<encoding>${charset}</encoding>
-								<charset>${charset}</charset>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-clover-plugin</artifactId>
-							<version>2.4</version>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-pmd-plugin</artifactId>
-							<version>2.5</version>
-							<configuration>
-								<sourceEncoding>utf-8</sourceEncoding>
-								<targetJdk>1.6</targetJdk>
-								<rulesets>
-									<ruleset>/rulesets/basic.xml</ruleset>
-									<ruleset>/rulesets/imports.xml</ruleset>
-									<ruleset>/rulesets/unusedcode.xml</ruleset>
-									<ruleset>/rulesets/controversial.xml</ruleset>
-								</rulesets>
-								<format>xml</format>
-								<linkXref>true</linkXref>
-								<minimumTokens>100</minimumTokens>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-checkstyle-plugin</artifactId>
-							<version>2.8</version>
-							<configuration>
-								<configLocation>config/sun_checks.xml</configLocation>
-								<encoding>${charset}</encoding>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-changes-plugin</artifactId>
-							<version>2.6</version>
-							<configuration>
-								<tracUser>${trac.username}</tracUser>
-								<tracPassword>${trac.password}</tracPassword>
-								<query>status!=closed&amp;order=type</query>
-								<outputEncoding>${charset}</outputEncoding>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-changelog-plugin</artifactId>
-							<version>2.2</version>
-							<configuration>
-								<username>${scm.username}</username>
-								<password>${scm.password}</password>
-								<outputEncoding>${charset}</outputEncoding>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.codehaus.mojo</groupId>
-							<artifactId>taglist-maven-plugin</artifactId>
-							<version>2.4</version>
-							<configuration>
-								<tags>
-									<tag>TODO</tag>
-									<tag>@todo</tag>
-									<tag>FIXME</tag>
-									<tag>XXX</tag>
-								</tags>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.codehaus.mojo</groupId>
-							<artifactId>cobertura-maven-plugin</artifactId>
-							<version>2.5.1</version>
-							<configuration>
-								<encoding>${charset}</encoding>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.codehaus.mojo</groupId>
-							<artifactId>clirr-maven-plugin</artifactId>
-							<version>2.3</version>
-							<configuration>
-								<minSeverity>info</minSeverity>
-							</configuration>
-						</plugin>
-					</reportPlugins>
+					<locales>zh_CN</locales>
+					<inputEncoding>${charset}</inputEncoding>
+					<outputEncoding>${charset}</outputEncoding>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.2.1</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<username>${scm.username}</username>
+					<password>${scm.password}</password>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<configuration>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.dayatang.mojo.hibernate3</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<components>
+						<component>
+							<name>hbm2ddl</name>
+							<implementation>annotationconfiguration</implementation>
+						</component>
+					</components>
+					<componentProperties>
+						<update>true</update>
+						<create>true</create>
+						<jdk5>true</jdk5>
+						<scan-classes>true</scan-classes>
+						<scan-jars>true</scan-jars>
+						<configurationfile>target/test-classes/hibernate.cfg.xml</configurationfile>
+						<skip>${maven.db.skip}</skip>
+					</componentProperties>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-schema</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>hbm2ddl</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>${jdbc.groupId}</groupId>
+						<artifactId>${jdbc.artifactId}</artifactId>
+						<version>${jdbc.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>net.sourceforge.cobertura</groupId>
+						<artifactId>cobertura</artifactId>
+						<version>1.9.4.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-validator</artifactId>
+						<version>4.2.0.Final</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>dbunit-maven-plugin</artifactId>
+				<version>1.0-beta-3</version>
+				<configuration>
+					<dataTypeFactoryName>${dbunit.dataTypeFactoryName}</dataTypeFactoryName>
+					<driver>${jdbc.driverClassName}</driver>
+					<url>${jdbc.url}</url>
+					<username>${jdbc.username}</username>
+					<password>${jdbc.password}</password>
+					<schema>${dbunit.schema}</schema>
+					<skip>${maven.db.skip}</skip>
+					<src>src/test/resources/sample-data.xml</src>
+					<type>${dbunit.operation.type}</type>
+					<ordered>true</ordered>
+					<format>flat</format>
+					<encoding>${charset}</encoding>
+					<doctype>dataset.dtd</doctype>
+				</configuration>
+				<executions>
+					<execution>
+						<id>fill-test-data</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>operation</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>export</id>
+						<goals>
+							<goal>export</goal>
+						</goals>
+						<configuration>
+							<doctype>${basedir}/target/dbunit/dataset.dtd</doctype>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>${jdbc.groupId}</groupId>
+						<artifactId>${jdbc.artifactId}</artifactId>
+						<version>${jdbc.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 		<extensions>
@@ -788,11 +664,88 @@
 				<version>2.1</version>
 			</extension>
 		</extensions>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>applicationContext*.xml</include>
+					<include>conf.properties</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>applicationContext*.xml</exclude>
+					<exclude>conf.properties</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<excludes>
+					<exclude>**/*</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>hibernate.cfg.xml</include>
+				</includes>
+				<filtering>true</filtering>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<excludes>
+					<exclude>hibernate.cfg.xml</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</testResource>
+		</testResources>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											com.dayatang.mojo.hibernate3
+										</groupId>
+										<artifactId>
+											hibernate3-maven-plugin
+										</artifactId>
+										<versionRange>
+											[2.4,)
+										</versionRange>
+										<goals>
+											<goal>hbm2ddl</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
-	
-	
-	
-	<!--    可用参数       -->
+
+
+
+	<!-- 可用参数 -->
 	<profiles>
 		<!-- ================= Production Settings Profile ================= -->
 		<profile>
@@ -934,7 +887,7 @@
 			</properties>
 		</profile>
 	</profiles>
-	
-	
+
+
 
 </project>

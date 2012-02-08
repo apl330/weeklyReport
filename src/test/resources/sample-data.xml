@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE dataset SYSTEM "dataset.dtd">
+<dataset>
+	<weekly_users id="14" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="yyang"/>
+  <weekly_users id="15" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="xmfang"/>
+  <weekly_users id="16" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="zjzhai"/>
+  <weekly_users id="17" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="mluo1"/>
+  <weekly_users id="18" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="huangzhihua"/>
+  <weekly_users id="19" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="zhanshengyan"/>
+  <weekly_users id="20" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="xiaojianbo"/>
+  <weekly_users id="21" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="huadui1"/>
+  <weekly_users id="22" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="huadui2"/>
+  <weekly_users id="23" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="wendui1"/>
+  <weekly_users id="24" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="wendui2"/>
+  <user_roles user_id="14" role_name="ROLE_SUPERVISOR"/>
+  <user_roles user_id="15" role_name="ROLE_PMO"/>
+  <user_roles user_id="16" role_name="ROLE_USER"/>
+  <user_roles user_id="17" role_name="ROLE_USER"/>
+  <user_roles user_id="18" role_name="ROLE_USER"/>
+  <user_roles user_id="19" role_name="ROLE_USER"/>
+  <user_roles user_id="20" role_name="ROLE_USER"/>
+  <user_roles user_id="21" role_name="ROLE_USER"/>
+  <user_roles user_id="22" role_name="ROLE_USER"/>
+  <user_roles user_id="23" role_name="ROLE_USER"/>
+  <user_roles user_id="24" role_name="ROLE_USER"/>
+</dataset>
