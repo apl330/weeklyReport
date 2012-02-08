@@ -64,8 +64,10 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	@Lob
 	private String comment;
 	
+	
 	private int status;
 	
+	/*备注*/
 	@Lob
 	private String memo;
 

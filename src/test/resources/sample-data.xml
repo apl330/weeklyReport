@@ -12,6 +12,10 @@
   <weekly_users id="22" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="huadui2"/>
   <weekly_users id="23" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="wendui1"/>
   <weekly_users id="24" version="0" account_non_expired="true" account_non_locked="true" credentials_non_expired="true" enabled="true" password="123" username="wendui2"/>
+	<weekly_reports id="1" version="1" project_name="广东清远1" author_id="14" from_date="2011-01-01" to_date="2011-08-05" work_place="广东清远工作地址"  done_works="已经做了的1" todo_works="计划工作" comment="批阅" status="1" memo="在" submit_date="2011-08-06" comment_date="2011-08-06"/>
+	<weekly_reports id="2" version="1" project_name="广东清远2" author_id="14" from_date="2011-01-01" to_date="2011-08-05" work_place="广东清远工作地址"  done_works="已经做了的2" todo_works="计划工作" comment="批阅" status="2" memo="在" submit_date="2011-08-06" comment_date="2011-08-06"/>
+	<weekly_reports id="3" version="1" project_name="广东清远3" author_id="14" from_date="2011-01-01" to_date="2011-08-05" work_place="广东清远工作地址"  done_works="已经做了的3" todo_works="计划工作" comment="批阅" status="3" memo="在" submit_date="2011-08-06" comment_date="2011-08-06"/>
+	<weekly_reports id="4" version="1" project_name="广东清远4" author_id="14" from_date="2011-01-01" to_date="2011-08-05" work_place="广东清远工作地址"  done_works="已经做了的34" todo_works="计划工作" comment="批阅" status="3" memo="在" submit_date="2011-08-06" comment_date="2011-08-06"/>
   <user_roles user_id="14" role_name="ROLE_SUPERVISOR"/>
   <user_roles user_id="15" role_name="ROLE_PMO"/>
   <user_roles user_id="16" role_name="ROLE_USER"/>

@@ -4,7 +4,17 @@
     weekly_users*,
     user_roles*
     )>
-
+<!ELEMENT weekly_users EMPTY>
+<!ATTLIST weekly_users
+    id CDATA #REQUIRED
+    version CDATA #REQUIRED
+    account_non_expired CDATA #IMPLIED
+    account_non_locked CDATA #IMPLIED
+    credentials_non_expired CDATA #IMPLIED
+    enabled CDATA #REQUIRED
+    password CDATA #IMPLIED
+    username CDATA #REQUIRED
+>
 <!ELEMENT weekly_reports EMPTY>
 <!ATTLIST weekly_reports
     id CDATA #REQUIRED
@@ -21,24 +31,13 @@
     memo CDATA #IMPLIED
     submit_date CDATA #IMPLIED
     comment_date CDATA #IMPLIED
-    comment CDATA #IMPLIED
 >
 <!ELEMENT vehicle_usages EMPTY>
 <!ATTLIST vehicle_usages
     id CDATA #REQUIRED
     version CDATA #REQUIRED
 >
-<!ELEMENT weekly_users EMPTY>
-<!ATTLIST weekly_users
-    id CDATA #REQUIRED
-    version CDATA #REQUIRED
-    account_non_expired CDATA #IMPLIED
-    account_non_locked CDATA #IMPLIED
-    credentials_non_expired CDATA #IMPLIED
-    enabled CDATA #REQUIRED
-    password CDATA #IMPLIED
-    username CDATA #REQUIRED
->
+
 
 <!ELEMENT user_roles EMPTY>
 <!ATTLIST user_roles
