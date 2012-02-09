@@ -15,7 +15,9 @@ public class ReportListAction extends BaseAction {
 	public String execute() {
 		
 		reports.addAll(WeeklyReport.findAll(new Integer[]{WeeklyReport.STATUS_COMMENTED}));
-		
+		for(WeeklyReport wr : reports){
+			System.out.println(wr.getAuthor() + " : " + wr.getAuthor().getLastName() + "\n\n\n");
+		}
 		return ActionSupport.SUCCESS;
 	}
 

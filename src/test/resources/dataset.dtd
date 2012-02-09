@@ -4,6 +4,7 @@
     weekly_users*,
     user_roles*
     )>
+    
 <!ELEMENT weekly_users EMPTY>
 <!ATTLIST weekly_users
     id CDATA #REQUIRED
@@ -11,9 +12,19 @@
     account_non_expired CDATA #IMPLIED
     account_non_locked CDATA #IMPLIED
     credentials_non_expired CDATA #IMPLIED
-    enabled CDATA #REQUIRED
+    enabled CDATA #IMPLIED
     password CDATA #IMPLIED
-    username CDATA #REQUIRED
+    username CDATA #IMPLIED
+    firstName CDATA #IMPLIED
+    lastName CDATA #IMPLIED
+    email CDATA #IMPLIED
+    phoneNumber CDATA #IMPLIED
+    website CDATA #IMPLIED
+    address CDATA #IMPLIED
+    city CDATA #IMPLIED
+    province CDATA #IMPLIED
+    country CDATA #IMPLIED
+    postalCode CDATA #IMPLIED
 >
 <!ELEMENT weekly_reports EMPTY>
 <!ATTLIST weekly_reports

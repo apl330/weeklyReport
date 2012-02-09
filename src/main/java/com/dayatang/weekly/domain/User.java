@@ -8,12 +8,12 @@ import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.CredentialsContainer;
@@ -36,6 +36,21 @@ public class User extends AbstractEntity implements UserDetails, CredentialsCont
 	private String username;
 
 	private String password;
+
+	private String passwordHint;
+	
+	private String firstName; 
+	
+	private String lastName; 
+	
+	private String email; 
+	
+	private String phoneNumber;
+	
+	private String website;
+	
+	@Embedded
+	private Address address = new Address();
 
 	@Column(name = "account_non_expired")
 	private boolean accountNonExpired = true;
@@ -207,4 +222,66 @@ public class User extends AbstractEntity implements UserDetails, CredentialsCont
 		return getRepository().getSingleResult(QuerySettings.create(User.class).eq("username", username).eq("password", password));
 	}
 
+	public String getPasswordHint() {
+		return passwordHint;
+	}
+
+	public void setPasswordHint(String passwordHint) {
+		this.passwordHint = passwordHint;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
+	
 }

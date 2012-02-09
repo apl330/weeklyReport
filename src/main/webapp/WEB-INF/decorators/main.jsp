@@ -32,37 +32,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <a href="#" class="brand">工作周报</a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form action="" class="navbar-search pull-left">
-            <input type="text" placeholder="Search" class="search-query span2">
-          </form>
-          <ul class="nav pull-right">
-            <li><a href="#">Link</a></li>
-            <li class="divider-vertical"></li>
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li>
+            <li class="active"><a href="#">周报列表</a></li>
+            <li><a href="#">编辑信息</a></li>
+            <li><a href="#">退出</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div>
