@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title><decorator:title default="dd"/></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<base href="<%=basePath%>"/>
-	<script src="js/jq.js"></script>
+	<script src="js/jquery-1.7.1.min.js"></script>
 	<script src="js/bootstrap-dropdown.js"></script>
 	<link href="styles/bootstrap.css" rel="stylesheet" type="text/css" />
 	<decorator:head/>
@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <a href="#" class="brand">工作周报</a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li class="active"><a href="#">周报列表</a></li>
+            <li class="active"><a href="#" >周报列表</a></li>
             <li><a href="#">编辑信息</a></li>
             <li><a href="#">退出</a></li>
           </ul>
@@ -42,7 +42,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
 <div class="container">
 <div class="well">
+<div class="row">
 <decorator:body/>
+</div>
 </div>
   </div>
 <div class="container">

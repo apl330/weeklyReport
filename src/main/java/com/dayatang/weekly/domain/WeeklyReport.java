@@ -22,7 +22,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-
 import com.dayatang.domain.AbstractEntity;
 import com.dayatang.domain.QuerySettings;
 
@@ -34,14 +33,14 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	public static final int STATUS_COMMENTED = 3;
 
 	private static final long serialVersionUID = -5694886020325909212L;
-	
+
 	@Column(name = "project_name")
 	private String projectName;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "author_id", nullable = false)
 	private User author;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "from_date")
 	private Date fromDate;
@@ -52,33 +51,32 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 
 	@Column(name = "work_place")
 	private String workPlace;
-	
+
 	@Lob
 	@Column(name = "done_works")
 	private String doneWorks;
-	
+
 	@Lob
 	@Column(name = "todo_works")
 	private String toDoWorks;
-	
+
 	@Lob
 	private String comment;
-	
-	
+
 	private int status;
-	
-	/*备注*/
+
+	/* 备注 */
 	@Lob
 	private String memo;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "submit_date")
 	private Date submitDate;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "comment_date")
 	private Date commentDate;
-	
+
 	@org.hibernate.annotations.CollectionOfElements
 	@JoinTable(name = "vehicle_usages", joinColumns = @JoinColumn(name = "report_id"))
 	@org.hibernate.annotations.IndexColumn(name = "pos")
@@ -122,7 +120,8 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	}
 
 	/**
-	 * @param commentDate the commentDate to set
+	 * @param commentDate
+	 *            the commentDate to set
 	 */
 	public void setCommentDate(Date commentDate) {
 		this.commentDate = commentDate;
@@ -156,7 +155,8 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	}
 
 	/**
-	 * @param toDate the toDate to set
+	 * @param toDate
+	 *            the toDate to set
 	 */
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
@@ -253,15 +253,22 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	}
 
 	public static List<WeeklyReport> findByAuthor(User user, Integer status[]) {
-		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class)
-			.eq("author.id", user.getId()).desc("submitDate");
+		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).eq("author.id", user.getId()).desc("id");
 		if (status.length > 0) {
 			querySettings = querySettings.in("status", status);
 		}
 		return getRepository().find(querySettings);
 	}
-	
-	public static List<WeeklyReport> findByExample(WeeklyReport report, final Date fromDate, final Date toDate){
+
+	public static WeeklyReport findTheLastOne(User user, Integer status[]) {
+		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).eq("author.id", user.getId()).desc("id");
+		if (status.length > 0) {
+			querySettings = querySettings.in("status", status);
+		}
+		return getRepository().getSingleResult(querySettings);
+	}
+
+	public static List<WeeklyReport> findByExample(WeeklyReport report, final Date fromDate, final Date toDate) {
 		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).desc("submitDate");
 		if (report.getAuthor() != null && !StringUtils.isEmpty(report.getAuthor().getUsername())) {
 			querySettings = querySettings.eq("author.lastName", report.getAuthor().getUsername());
@@ -272,7 +279,7 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 		if (!StringUtils.isEmpty(report.getWorkPlace())) {
 			querySettings = querySettings.eq("workPlace", report.getWorkPlace());
 		}
-		if (report.getStatus()> 0) {
+		if (report.getStatus() > 0) {
 			querySettings = querySettings.eq("status", report.getStatus());
 		}
 		if (fromDate != null) {
@@ -286,8 +293,7 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("projectName", projectName).append("author", author).append("fromDate", fromDate).append(
-				"toDate", toDate).toString();
+		return new ToStringBuilder(this).append("projectName", projectName).append("author", author).append("fromDate", fromDate).append("toDate", toDate).toString();
 	}
 
 	@Override
@@ -314,7 +320,7 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	public boolean isAllowCommentBy(User user) {
 		return user.getRoles().contains(Constants.ROLE_HEAD) && getStatus() > WeeklyReport.STATUS_DRAFT;
 	}
-	
+
 	public int getVehicleMileage() {
 		int result = 0;
 		for (VehicleUsage vehicleUsage : vehicleUsages) {

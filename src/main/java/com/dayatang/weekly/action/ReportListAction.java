@@ -13,11 +13,8 @@ public class ReportListAction extends BaseAction {
 	private List<WeeklyReport> reports = new ArrayList<WeeklyReport>();
 	
 	public String execute() {
-		
-		reports.addAll(WeeklyReport.findAll(new Integer[]{WeeklyReport.STATUS_COMMENTED}));
-		for(WeeklyReport wr : reports){
-			System.out.println(wr.getAuthor() + " : " + wr.getAuthor().getLastName() + "\n\n\n");
-		}
+		Integer[] status = new Integer[] { WeeklyReport.STATUS_COMMENTED, WeeklyReport.STATUS_DRAFT, WeeklyReport.STATUS_SUBMITTED };
+		reports.addAll(WeeklyReport.findByAuthor(getCurrentUser(), status));
 		return ActionSupport.SUCCESS;
 	}
 
@@ -28,7 +25,5 @@ public class ReportListAction extends BaseAction {
 	public void setReports(List<WeeklyReport> reports) {
 		this.reports = reports;
 	}
-	
-	
 
 }

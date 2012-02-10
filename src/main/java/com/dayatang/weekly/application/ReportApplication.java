@@ -34,4 +34,5 @@ public interface ReportApplication {
 	void saveAttachment(Attachment attachment);
 	
 	void removeAttachment(Attachment attachment);
+	
 }
