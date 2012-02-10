@@ -19,7 +19,9 @@
 		});
 		
 		$("#draft").click(function(){
-			$.ajax({
+			$("#reportForm").attr("action", "save-draft.action");
+			$("#reportForm").submit();
+			/* $.ajax({
 				type : 'POST',
 				url : "save-draft.action",
 				async : true,
@@ -28,7 +30,7 @@
 				error : function(html) {
 					alert("提交数据失败，代码:" + html.status + "，请稍候再试");
 				}
-			});
+			}); */
 		});
 	});
 </script>
@@ -83,8 +85,9 @@
 						<s:textarea rows="5" id="memo" name="report.memo" cssClass="span6" />
 					</div>
 				</div>
-				<input type="hidden" name="reportId" value="${#request.reportId }"
-					id="reportId" />
+				<input type="hidden" name="reportId" value="${#request.reportId }"  />
+				<s:hidden name="report.id" />
+				<%-- <input type="hidden" name="report.id" value="${#request.reportId }"  /> --%>
 				<div class="form-actions">
 					<button class="btn btn-primary"  type="submit" id="commit">呈报</button>
 					<button class="btn" type="reset">清空</button>
