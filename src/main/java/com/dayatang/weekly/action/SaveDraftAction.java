@@ -10,15 +10,15 @@ public class SaveDraftAction extends BaseAction {
 
 	private static final long serialVersionUID = 7947066700832613426L;
 	private WeeklyReport report;
-	private long reportId = 0L;
+
+	private long reportId;
 
 	@Action(results = { @Result(name = "success", type = "redirect", location = "add-report.action", params = { "reportId", "${reportId}" }) })
 	public String execute() {
 		report.setAuthor(getCurrentUser());
 		this.reportApplication.saveReportAsDraft(report);
-		if (reportId <= 0L) {
-			report = WeeklyReport.findTheLastOne(getCurrentUser(), new Integer[] { WeeklyReport.STATUS_DRAFT });
-			reportId = report.getId();
+		if (report.getId() == null || report.getId() == 0) {
+			reportId = WeeklyReport.findTheLastOne(getCurrentUser(), new Integer[] { WeeklyReport.STATUS_DRAFT }).getId();
 		}
 		return ActionSupport.SUCCESS;
 	}

@@ -27,16 +27,16 @@ public class AddReportAction extends BaseAction {
 		}
 		return ActionSupport.SUCCESS;
 	}
-
-/*	@Action(value = "save-draft.action", results = { @Result(name = "success", type = "redirect", location = "add-report.action", params = { "reportId", "${reportId}" }) })
+/*
+	@Action(value = "save-draft.action", results = { @Result(name = "success", type = "redirect", location = "add-report.action", params = { "reportId", "${reportId}" }) })
 	public String saveDraft() {
 		report.setAuthor(getCurrentUser());
 		this.reportApplication.saveReportAsDraft(report);
 		report = WeeklyReport.findTheLastOne(getCurrentUser(), new Integer[] { WeeklyReport.STATUS_DRAFT });
 		reportId = report.getId();
 		return ActionSupport.SUCCESS;
-	}*/
-
+	}
+*/
 	public Long getReportId() {
 		return reportId;
 	}
