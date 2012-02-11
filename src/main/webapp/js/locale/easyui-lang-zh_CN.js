@@ -45,7 +45,7 @@ if ($.fn.datebox){
 		var y = date.getFullYear();
 		var m = date.getMonth()+1;
 		var d = date.getDate();
-		return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+		return "   "  + y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
 	};
 	$.fn.datebox.defaults.parser = function(s){
 		if (!s) return new Date();

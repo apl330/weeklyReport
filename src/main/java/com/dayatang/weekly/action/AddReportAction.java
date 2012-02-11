@@ -17,31 +17,23 @@ public class AddReportAction extends BaseAction {
 
 	private static final long serialVersionUID = -6223024524397861299L;
 
-	private Long reportId = 0L;
+	private long reportId = 0L;
 
 	private WeeklyReport report;
 
 	public String execute() throws Exception {
 		if (reportId > 0L) {
 			report = WeeklyReport.get(reportId);
+			System.out.println("\n\n" + report.getVersion() + "\n\n");
 		}
 		return ActionSupport.SUCCESS;
 	}
-/*
-	@Action(value = "save-draft.action", results = { @Result(name = "success", type = "redirect", location = "add-report.action", params = { "reportId", "${reportId}" }) })
-	public String saveDraft() {
-		report.setAuthor(getCurrentUser());
-		this.reportApplication.saveReportAsDraft(report);
-		report = WeeklyReport.findTheLastOne(getCurrentUser(), new Integer[] { WeeklyReport.STATUS_DRAFT });
-		reportId = report.getId();
-		return ActionSupport.SUCCESS;
-	}
-*/
-	public Long getReportId() {
+
+	public long getReportId() {
 		return reportId;
 	}
 
-	public void setReportId(Long reportId) {
+	public void setReportId(long reportId) {
 		this.reportId = reportId;
 	}
 
@@ -52,5 +44,4 @@ public class AddReportAction extends BaseAction {
 	public void setReport(WeeklyReport report) {
 		this.report = report;
 	}
-
 }

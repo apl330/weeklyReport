@@ -7,30 +7,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="styles/themes/default/easyui.css" type="text/css"
-	rel="stylesheet">
-<link href="styles/themes/icon.css" type="text/css" rel="stylesheet">
+	rel="stylesheet"/>
+<link href="styles/themes/icon.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+
 <title>添加周报</title>
 <script type="text/javascript">
-	$().ready(function(e) {
+	$(document).ready(function(){
 		$('#fromDate, #toDate').datebox({
 			required : true
 		});
-		
+		 var options={   
+				  dataType: 'json',
+	              success : function(data,status){
+	            	  $("#version").attr("value",data.report.version);
+	          	      $("#reportId").attr("value",data.report.id);
+	              }
+	     };  
 		$("#draft").click(function(){
-			$("#reportForm").attr("action", "save-draft.action");
-			$("#reportForm").submit();
-			/* $.ajax({
-				type : 'POST',
-				url : "save-draft.action",
-				async : true,
-				cache : false,
-				data : $("#reportForm").serialize(),
-				error : function(html) {
-					alert("提交数据失败，代码:" + html.status + "，请稍候再试");
-				}
-			}); */
+			$('#reportForm').submit(function(){
+				$(this).ajaxSubmit(options); 
+			    return false; 
+			});
+			
+		});
+		$("#commit").mouseover(function(){
+			$("#status").attr("value","<s:property value='%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}'/>");
+		});
+		$("#draft").mouseover(function(){
+			$("#status").attr("value","<s:property value='%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_DRAFT}'/>");
 		});
 	});
 </script>
@@ -38,7 +45,8 @@
 <body>
 
 	<div class="clearfix span8">
-		<s:form cssClass="form-horizontal" action="commit-report.action" theme="simple" id="reportForm">
+		<s:form enctype="multipart/form-data"  cssClass="form-horizontal" action="save-report.action"
+			theme="simple" id="reportForm">
 			<fieldset>
 				<legend>添加周报</legend>
 				<div class="control-group">
@@ -85,13 +93,20 @@
 						<s:textarea rows="5" id="memo" name="report.memo" cssClass="span6" />
 					</div>
 				</div>
-				<input type="hidden" name="reportId" value="${#request.reportId }"  />
-				<s:hidden name="report.id" />
-				<%-- <input type="hidden" name="report.id" value="${#request.reportId }"  /> --%>
+				<div class="control-group">
+				<div id="upMessage" style="display:hidden">保存成功！</div>  
+				</div>
+				<%-- <input type="hidden" name="reportId" id="report1" value="${param.reportId}" /> --%>
+				<s:hidden name="status"
+					value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}"
+					id="status" />
+				<s:hidden id="reportId" name="report.id" />
+				<s:hidden id="version" name="report.version"/>
+				<%-- <input type="hidden" name="report.id" value="${param.reportId}"  />  --%>
 				<div class="form-actions">
-					<button class="btn btn-primary"  type="submit" id="commit">呈报</button>
+					<button class="btn btn-primary" type="submit" id="commit">呈报</button>
 					<button class="btn" type="reset">清空</button>
-					<a class="btn"  id="draft"  >存为草稿</a>
+					<button class="btn" id="draft">存为草稿</button>
 				</div>
 			</fieldset>
 		</s:form>
