@@ -24,7 +24,6 @@ public class AddReportAction extends BaseAction {
 	public String execute() throws Exception {
 		if (reportId > 0L) {
 			report = WeeklyReport.get(reportId);
-			System.out.println("\n\n" + report.getVersion() + "\n\n");
 		}
 		return ActionSupport.SUCCESS;
 	}

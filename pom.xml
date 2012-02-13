@@ -941,7 +941,7 @@
 				<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
 				<jdbc.url><![CDATA[jdbc:mysql://${db.host}:${db.port}/${db.name}?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
 				<jdbc.username>root</jdbc.username>
-				<jdbc.password></jdbc.password>
+				<jdbc.password>123456</jdbc.password>
 			</properties>
 		</profile>
 	</profiles>

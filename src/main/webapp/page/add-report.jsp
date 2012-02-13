@@ -11,7 +11,6 @@
 <link href="styles/themes/icon.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="js/jquery.form.js"></script>
 
 <title>添加周报</title>
 <script type="text/javascript">
@@ -19,20 +18,14 @@
 		$('#fromDate, #toDate').datebox({
 			required : true
 		});
-		 var options={   
-				  dataType: 'json',
-	              success : function(data,status){
-	            	  $("#version").attr("value",data.report.version);
-	          	      $("#reportId").attr("value",data.report.id);
-	              }
-	     };  
+		 
 		$("#draft").click(function(){
-			$('#reportForm').submit(function(){
-				$(this).ajaxSubmit(options); 
-			    return false; 
+			$.getJSON("save-report.action", $("#reportForm").serialize(), function(data){
+			 	  $("#version").attr("value",data.report.version);
+          	      $("#reportId").attr("value",data.report.id);
 			});
-			
 		});
+		
 		$("#commit").mouseover(function(){
 			$("#status").attr("value","<s:property value='%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}'/>");
 		});
@@ -45,22 +38,19 @@
 <body>
 
 	<div class="clearfix span8">
-		<s:form enctype="multipart/form-data"  cssClass="form-horizontal" action="save-report.action"
-			theme="simple" id="reportForm">
+		<s:form enctype="multipart/form-data"  cssClass="form-horizontal" action="save-report.action" theme="simple" id="reportForm" method="post">
 			<fieldset>
 				<legend>添加周报</legend>
 				<div class="control-group">
 					<label class="control-label">项目名</label>
 					<div class="controls">
-						<s:textfield id="projectName" name="report.projectName"
-							cssClass="input-xlarge" />
+						<s:textfield id="projectName" name="report.projectName" cssClass="input-xlarge" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">地点</label>
 					<div class="controls">
-						<s:textfield rows="5" id="workPlace" name="report.workPlace"
-							cssClass="input-xlarge" />
+						<s:textfield rows="5" id="workPlace" name="report.workPlace" cssClass="input-xlarge" />
 					</div>
 				</div>
 				<div class="control-group">
@@ -94,19 +84,16 @@
 					</div>
 				</div>
 				<div class="control-group">
-				<div id="upMessage" style="display:hidden">保存成功！</div>  
+				<div id="upMessage" style="display: none;">保存成功！</div>  
 				</div>
 				<%-- <input type="hidden" name="reportId" id="report1" value="${param.reportId}" /> --%>
-				<s:hidden name="status"
-					value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}"
-					id="status" />
+				<s:hidden name="status" 	value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}" 	id="status" />
 				<s:hidden id="reportId" name="report.id" />
 				<s:hidden id="version" name="report.version"/>
-				<%-- <input type="hidden" name="report.id" value="${param.reportId}"  />  --%>
 				<div class="form-actions">
 					<button class="btn btn-primary" type="submit" id="commit">呈报</button>
 					<button class="btn" type="reset">清空</button>
-					<button class="btn" id="draft">存为草稿</button>
+					<button class="btn" type="button" id="draft">存为草稿</button>
 				</div>
 			</fieldset>
 		</s:form>

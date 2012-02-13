@@ -18,24 +18,29 @@ public class VehicleUsage implements ValueObject {
 
 	private static final long serialVersionUID = -3814917335207792092L;
 
+	//使用日期
 	@Temporal(TemporalType.DATE)
 	@Column(name = "start_date")
 	private Date fromDate;
 	
+	//车牌号码
 	@Column(name = "license_plate_number")
 	private String licensePlateNumber;
 	
 	private String driver;
 	
+	//开始里程
 	@Column(name = "start_mileage")
 	private int startMileage;
 	
 	@Column(name = "end_mileage")
 	private int endMileage;
 	
+	//开始地点
 	@Column(name = "from_place")
 	private String fromPlace;
 	
+	//结束地点
 	@Column(name = "to_place")
 	private String toPlace;
 

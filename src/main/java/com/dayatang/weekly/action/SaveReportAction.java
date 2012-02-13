@@ -15,17 +15,19 @@ public class SaveReportAction extends BaseAction {
 	private WeeklyReport report;
 
 	private int status = 1;
-	@Action(results = {
-			@Result(name = "success", type = "redirect", location = "report-list.action"),
-			@Result(name = "input", type = "json") })
+	
+	
+	@Action(results = { @Result(name = "success", type = "redirect", location = "report-list.action"), @Result(name = "input", type = "json") })
 	public String execute() {
 		report.setAuthor(getCurrentUser());
+
 		if (status == WeeklyReport.STATUS_DRAFT) {
 			this.reportApplication.saveReportAsDraft(report);
-			report = WeeklyReport.findTheLastOne(getCurrentUser(),
-					new Integer[] { WeeklyReport.STATUS_DRAFT });
+			report = WeeklyReport.findTheLastOne(getCurrentUser(), new Integer[] { WeeklyReport.STATUS_DRAFT });
 			reportId = report.getId();
+			System.out.println(report.getVersion() + " \n\n-=-=" + report.getProjectName() + "\n\n");
 			return ActionSupport.INPUT;
+
 		} else if (status == WeeklyReport.STATUS_SUBMITTED) {
 			this.reportApplication.submitReport(report);
 			return ActionSupport.SUCCESS;

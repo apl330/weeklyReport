@@ -49,8 +49,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
   </div>
 <div class="container">
-    <p class="pull-left">&copy; Copyright <a href="http://www.dayatang.com"><s:text name="copyright" /></a>.</p>
-    <p class="pull-right"><a href="http://www.dayatang.com">power by <s:text name="power-by" /></a></p>
+    <p class="pull-left">&copy; Copyright <a href="http://www.suilink.com">广州日海</a>.</p>
+    <p class="pull-right"><a href="http://www.dayatang.com">power by 广州大雅堂</a></p>
 </div>
   
 </body>
