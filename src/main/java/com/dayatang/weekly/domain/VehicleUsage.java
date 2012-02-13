@@ -27,6 +27,7 @@ public class VehicleUsage implements ValueObject {
 	@Column(name = "license_plate_number")
 	private String licensePlateNumber;
 	
+	//司机
 	private String driver;
 	
 	//开始里程

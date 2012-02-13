@@ -75,7 +75,7 @@ public class Attachment extends AbstractEntity {
 	public static List<Attachment> findByReport(WeeklyReport report) {
 		return getRepository().find(QuerySettings.create(Attachment.class).eq("report", report));
 	}
-
+	
 	@Override
 	public boolean equals(final Object other) {
 		if (this == other)

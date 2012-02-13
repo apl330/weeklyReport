@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
-import com.dayatang.weekly.application.ReportApplication;
 import com.opensymphony.xwork2.ActionContext;
 
 /**

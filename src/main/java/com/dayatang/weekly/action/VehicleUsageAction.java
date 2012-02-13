@@ -15,7 +15,6 @@ public class VehicleUsageAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private ReportApplication reportApplication;
 	private VehicleUsage vehicleUsage = new VehicleUsage();
 	private List<VehicleUsage> vehicleUsages = new ArrayList<VehicleUsage>();
 	private WeeklyReport report = new WeeklyReport();

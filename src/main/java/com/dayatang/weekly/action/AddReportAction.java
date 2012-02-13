@@ -1,7 +1,5 @@
 package com.dayatang.weekly.action;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import com.dayatang.weekly.domain.WeeklyReport;
 import com.opensymphony.xwork2.ActionSupport;

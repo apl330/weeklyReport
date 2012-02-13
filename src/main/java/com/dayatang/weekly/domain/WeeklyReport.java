@@ -212,15 +212,13 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 
 	public String getStatusString() {
 		if (status == WeeklyReport.STATUS_DRAFT) {
-			return "草稿";
+			return resourceBundle.getString("weeklyReport.status.draft");
 		}
 		if (status == WeeklyReport.STATUS_SUBMITTED) {
-			//return resourceBundle.getString("weeklyReport.status.submitted");
-			return "已呈报";
+			return resourceBundle.getString("weeklyReport.status.submitted");
 		}
 		if (status == WeeklyReport.STATUS_COMMENTED) {
-			//return resourceBundle.getString("weeklyReport.status.commented");
-			return "已评阅";
+			return resourceBundle.getString("weeklyReport.status.commented");
 		}
 		return "";
 	}
@@ -239,7 +237,7 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	public void makeComment() {
 		setStatus(STATUS_COMMENTED);
 		setCommentDate(new Date());
-		getRepository().save(this);
+		this.save();
 	}
 
 	public static WeeklyReport get(Long id) {
