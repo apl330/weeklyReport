@@ -274,6 +274,7 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 		return getRepository().getSingleResult(querySettings);
 	}
 
+	
 	public static List<WeeklyReport> findByExample(WeeklyReport report, final Date fromDate, final Date toDate) {
 		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).desc("submitDate");
 		if (report.getAuthor() != null && !StringUtils.isEmpty(report.getAuthor().getUsername())) {

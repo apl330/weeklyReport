@@ -1,6 +1,8 @@
 package com.dayatang.weekly.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.dayatang.domain.AbstractEntity;
+import com.dayatang.domain.QuerySettings;
 
 @Entity
 @Table(name = "vehicle_usages")
@@ -54,6 +57,21 @@ public class VehicleUsage extends AbstractEntity {
 	@Column(name = "to_place")
 	private String toPlace;
 
+
+	/**
+	 * 拿到周报中最后车辆使用情况
+	 * @param report
+	 * @return
+	 */
+	public static VehicleUsage getLastOneOf(WeeklyReport report){
+		QuerySettings<VehicleUsage> settings = QuerySettings.create(VehicleUsage.class).eq("report", report).desc("id");
+		List<VehicleUsage> results = new ArrayList<VehicleUsage>();
+		results.addAll(getRepository().find(settings));
+		return results.size() > 0 ? results.get(results.size()-1) : null;
+		
+	}
+	
+	
 	public VehicleUsage() {
 	}
 

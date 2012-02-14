@@ -49,16 +49,17 @@
 				//移除车辆使用
 				function rmVe(id,self){
 					var veId = id;
-					$.getJSON("remove-vechicle.action",{veId:veId},function(result){
+					$.getJSON("remove-vehicle.action",{veId:veId},function(result){
 						if(result.success == true){
 							$(self).parent().parent().remove();
 						}
 					});
 				}
+				//添加车辆使用
 				function saveVehicle(self){
 					$(self).parent().submit(function(){
-						$.getJSON("save-vechicle.action", this.serialize(), function(result){
-							
+						$.getJSON("save-vehicle.action", this.serialize(), function(result){
+							console.log(result.vehicleUsage);
 						});
 						return false;
 					});
