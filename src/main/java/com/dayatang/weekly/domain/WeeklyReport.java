@@ -7,12 +7,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -78,10 +77,8 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	@Column(name = "comment_date")
 	private Date commentDate;
 
-	@org.hibernate.annotations.CollectionOfElements
-	@JoinTable(name = "vehicle_usages", joinColumns = @JoinColumn(name = "report_id"))
-	@org.hibernate.annotations.IndexColumn(name = "pos")
-	private List<VehicleUsage> vehicleUsages = new ArrayList<VehicleUsage>();
+	@OneToMany(mappedBy="report")
+	private List<VehicleUsage> vehicleUsages ;
 
 	@Transient
 	private ResourceBundle resourceBundle = ResourceBundle.getBundle("ApplicationResources", Locale.CHINA);
@@ -330,11 +327,4 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 		return user.getRoles().contains(Constants.ROLE_HEAD) && getStatus() > WeeklyReport.STATUS_DRAFT;
 	}
 
-	public int getVehicleMileage() {
-		int result = 0;
-		for (VehicleUsage vehicleUsage : vehicleUsages) {
-			result += vehicleUsage.getMileage();
-		}
-		return result;
-	}
 }

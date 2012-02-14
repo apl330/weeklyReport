@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	$() .ready(function() {
 					 
-						/* $("#draft").click(function() {
+						$("#draft").click(function() {
 									$.getJSON("save-report.action", $( "#reportForm").serialize(),
 											function(data) {
 												$("#version").attr("value", data.report.version);
@@ -28,26 +28,42 @@
 						});
 
 						$("#addVehicleUsage").click(function() {
-									$("#vehicleUsages").append($("#vu").clone().removeAttr("id"));
+									$("#vehicleUsages-added").append($("#vu").clone().removeAttr("id"));
 						});
 						
 						$("#addAttach").click(function(){
 							$("#attachments").append($("#am").clone().removeAttr("id"));
-						}); */
+						}); 
 						
 						$("#fromDate, #toDate").datebox({
 							formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); }
 						});
-				
+					
 						
 					});
+	
+			
 				function del(self){
 					$(self).parent().remove();
 				}
-				
-				function delRow(self){
-					$(self).parent().parent().remove();
+				//移除车辆使用
+				function rmVe(id,self){
+					var veId = id;
+					$.getJSON("remove-vechicle.action",{veId:veId},function(result){
+						if(result.success == true){
+							$(self).parent().parent().remove();
+						}
+					});
 				}
+				function saveVehicle(self){
+					$(self).parent().submit(function(){
+						$.getJSON("save-vechicle.action", this.serialize(), function(result){
+							
+						});
+						return false;
+					});
+				}
+				
 				
 </script>
 </head>
@@ -56,7 +72,6 @@
 
 	<div id="tt" class="easyui-tabs" tools="#tab-tools" >
 		<div title="周报内容" tools="#p-tools" style="padding:20px;">
-			<p>
 	<s:form enctype="multipart/form-data" cssClass="form-horizontal" action="save-report.action" theme="simple" id="reportForm" 	method="post">
 				<div class="control-group">
 					<label class="control-label">项目名</label>
@@ -101,8 +116,12 @@
 					<s:hidden name="status" value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}" id="status" />
 					<s:hidden id="reportId" name="report.id" />
 					<s:hidden id="version" name="report.version" />
+				<div class="form-actions">
+					<button class="btn btn-primary" type="submit" id="commit">呈报</button>
+					<button class="btn" type="reset">清空</button>
+					<button class="btn" type="button" id="draft">存为草稿</button>
+				</div>
 			</s:form>
-	</p>
 		</div>
 		
 		
@@ -114,19 +133,19 @@
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		<div title="车辆使用" closable="true" style="padding:20px;" cache="false"  >
-			<div  id="vehicleUsages-added">
-							<table>
+		<div title="车辆使用"  style="padding:20px;" cache="false"  >
+		<div>
+			<button class="btn" id="addVehicleUsage">添加</button>
+		</div>
+		<div  id="vehicleUsages-added">
+			<s:if test="report.vehicleUsages == null">
+				未使用车辆
+			</s:if>
+			<s:else>
+			<table class="table">
 							<thead>
 								<tr>
-									<th>车牌号</th>
-									<th>司机</th>
+									<th class="span2">车牌号-司机</th>
 									<th>使用日期</th>
 									<th>开始量程</th>
 									<th>结束量程</th>
@@ -136,33 +155,46 @@
 								</tr>
 							</thead>
 							<tbody>
-								<s:iterator value="report.vehicleUsages" id="vr" >
-									<s:set name="ve" value="#vr" />
+								<s:iterator value="report.vehicleUsages" id="ve" >
 									<tr>
-										<td><s:property /></td>
-										<td ><s:textfield theme="simple" value="%{#ve.licensePlateNumber}" name="vehicleUsages.licensePlateNumber" cssClass="span2"  disabled="true"/></td>
-										<td ><s:textfield theme="simple" value="%{#ve.driver}" cssClass="span1" disabled="true"/></td>
-										<td><s:property value="%{#ve.fromDate}"/><s:hidden name="vehicleUsages.fromDate"/></td>
-										<td ><s:textfield theme="simple" value="%{#ve.startMileage}" name="vehicleUsages.startMileage" cssClass="span2" disabled="true"/></td>
-										<td><s:textfield theme="simple" value="%{#ve.endMileage}" name="vehicleUsages.endMileage" cssClass="span2" disabled="true"/></td>
-										<td ><s:textfield theme="simple" value="%{#ve.fromPlace}" name="vehicleUsages.fromPlace" cssClass="span2" disabled="true"/></td>
-										<td><s:textfield theme="simple" value="%{#ve.toPlace}" name="vehicleUsages.toPlace" cssClass="span2" disabled="true"/></td>
-										<td><button type="button" onclick="delRow(this)" class="btn"/>移除</td>
+										<td><s:property value="#ve.licensePlateNumber" /> - <s:property value="#ve.driver"/></td>
+										<td><s:property value="#ve.fromDate"/></td>
+										<td><s:property value="#ve.startMileage"/></td>
+										<td><s:property value="#ve.endMileage"/></td>
+										<td><s:property value="#ve.fromPlace"/></td>
+										<td><s:property value="#ve.toPlace"/></td>
+										<td><button type="button" onclick="rmVe('<s:property value="#ve.id"/>', this)" class="btn"/>移除</td>
 									</tr>
 								</s:iterator>
 							</tbody>
-							</table>						
+			</table>						
+			</s:else>
 		 </div>
 		</div>
-		<div title="附件"  closable="true" style="padding:20px;">
+		
+		
+		
+		<div title="附件"   style="padding:20px;"  cache="false" >
 		</div>
 	</div>
-	
-	<div id="tab-tools">
-		<a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-add" onclick="javascript:alert('add')"></a>
-		<a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-save" onclick="javascript:alert('save')"></a>
+	<div style="display: none;">
+		<div id="vu" class="vehicleUsageTemp">
+			<p>
+					<s:form theme="simple"  method="post" >
+					<input placeholder="车牌号" type="text" name="vehicleUsage.licensePlateNumber" class="span2" />
+					<input placeholder="司机" type="text" name="vehicleUsage.driver" class="span1" />
+					<input placeholder="使用日期" type="text" name="vehicleUsage.fromDate" class="datebox "/>
+					<input placeholder="开始量程" type="text" name="vehicleUsage.startMileage" class="span2" /> 
+					<input placeholder="结束量程" type="text" name="vehicleUsage.endMileage" class="span2" /><br/>
+					<input placeholder="起始地点" type="text" name="vehicleUsage.fromPlace" class="span2" />
+					<input placeholder="到达地点" type="text" name="vehicleUsage.toPlace" class="span2" />
+					<s:hidden id="reportId" name="report.id" />
+					<button class="btn" type=button onclick="saveVehicle(this)">提交</button>&nbsp;&nbsp;&nbsp;
+					<button class="btn"  onclick="del(this)" type="button">移除</button>
+					</s:form>
+			</p>
+		</div>
 	</div>
-	
 		
 </body>
 </html>

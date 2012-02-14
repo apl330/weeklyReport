@@ -27,9 +27,9 @@
   <user_roles user_id="22" role_name="ROLE_USER"/>
   <user_roles user_id="23" role_name="ROLE_USER"/>
   <user_roles user_id="24" role_name="ROLE_USER"/>
-  <vehicle_usages report_id="1" driver="黄师傅" end_mileage="2" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" pos="1"/>
-  <vehicle_usages report_id="1" driver="李师傅" end_mileage="4" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" pos="2"/>
-  <vehicle_usages report_id="1" driver="何师傅" end_mileage="5" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" pos="3"/>
-  <vehicle_usages report_id="1" driver="张师傅" end_mileage="7" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" pos="4"/>
+  <vehicle_usages id="1" version="0" report_id="1" driver="黄师傅" end_mileage="2" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" />
+  <vehicle_usages id="2" version="0" report_id="1" driver="李师傅" end_mileage="4" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place=""/>
+  <vehicle_usages id="3" version="0" report_id="1" driver="何师傅" end_mileage="5" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" />
+  <vehicle_usages id="4" version="0" report_id="1" driver="张师傅" end_mileage="7" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" />
 </dataset>
 
