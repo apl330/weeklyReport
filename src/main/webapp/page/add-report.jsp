@@ -29,6 +29,7 @@
 
 						$("#addVehicleUsage").click(function() {
 									$("#vehicleUsages-added").append($("#vu").clone().removeAttr("id"));
+									$(".datebox").datebox();
 						});
 						
 						$("#addAttach").click(function(){
@@ -57,8 +58,10 @@
 				}
 				//添加车辆使用
 				function saveVehicle(self){
+					console.log($(self).parent());
 					$(self).parent().submit(function(){
-						$.getJSON("save-vehicle.action", this.serialize(), function(result){
+						console.log("into");
+						$.getJSON("save-vehicle.action", $(self).parent().serialize(), function(result){
 							console.log(result.vehicleUsage);
 						});
 						return false;
@@ -181,7 +184,7 @@
 	<div style="display: none;">
 		<div id="vu" class="vehicleUsageTemp">
 			<p>
-					<s:form theme="simple"  method="post" >
+					<s:form theme="simple"  method="post" action="save-vehicle.action">
 					<input placeholder="车牌号" type="text" name="vehicleUsage.licensePlateNumber" class="span2" />
 					<input placeholder="司机" type="text" name="vehicleUsage.driver" class="span1" />
 					<input placeholder="使用日期" type="text" name="vehicleUsage.fromDate" class="datebox "/>
