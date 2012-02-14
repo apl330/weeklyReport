@@ -16,9 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title><decorator:title default="dd"/></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<base href="<%=basePath%>"/>
-	<script src="js/jquery-1.7.1.min.js"></script>
-	<script src="js/bootstrap-dropdown.js"></script>
 	<link href="styles/bootstrap.css" rel="stylesheet" type="text/css" />
+	<script src="js/jquery-1.7.1.min.js"></script>
+	<script src="js/easyui.js"></script>
 	<decorator:head/>
 </head>
 <body>
@@ -43,9 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
 <div class="container">
 <div class="well">
-<div class="row">
 <decorator:body/>
-</div>
 </div>
   </div>
 <div class="container">

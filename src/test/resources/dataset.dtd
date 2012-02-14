@@ -45,8 +45,15 @@
 >
 <!ELEMENT vehicle_usages EMPTY>
 <!ATTLIST vehicle_usages
-    id CDATA #REQUIRED
-    version CDATA #REQUIRED
+    report_id CDATA #REQUIRED
+    driver CDATA #IMPLIED
+    end_mileage CDATA #IMPLIED
+    start_date CDATA #IMPLIED
+    from_place CDATA #IMPLIED
+    license_plate_number CDATA #IMPLIED
+    start_mileage CDATA #IMPLIED
+    to_place CDATA #IMPLIED
+    pos CDATA #IMPLIED
 >
 
 

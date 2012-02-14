@@ -21,10 +21,10 @@
 		<display:column style="width:50px;" property="statusString" title="状态"  sortable="true"/>
 		<display:column>
 			 <s:if test="#attr['report'].status == #DRAFT">
-			 	<a href="${basePath }/add-report.action?reportId=${report.id}">编辑</a>
+			 	<a href="add-report.action?reportId=${report.id}">编辑</a>
 			 </s:if>
 			 <s:else>
-			 	<a href="${basePath} }/view-report.action?reportId=${report.id}">查看</a>
+			 	<a href="view-report.action?reportId=${report.id}">查看</a>
 			 </s:else>
 		</display:column>
 	</display:table>

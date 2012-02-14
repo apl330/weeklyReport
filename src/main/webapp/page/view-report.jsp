@@ -15,20 +15,21 @@
 				$("#content").hide();
 				$("#comment").show();
 			});
-			
 		});
 	</script>
 	<title> 查看 </title>
 </head>
 <body>
-  <div class="clearfix">
+  <div class="row">
   <s:set id="commented" value="commented"/>
     <s:if test="#commented == false">
   <div  class="span5">
 	  <button id="comment"  class="btn" type="button" >评阅</button>
   </div>
     </s:if>
- 	<table class="table-bordered span8">
+    
+    <div class="span11">
+ 	<table class="table">
  		<tbody>
  			<tr>
  			<th class="span2">项目名</th>
@@ -61,7 +62,7 @@
  				</td>
  			</tr>
  			<tr id="content" style="display: none;">
- 				<th>&nbsp;</th>
+ 				<th>评阅</th>
  				<td colspan="3">
 	 				<s:form theme="simple" action="save-comment.action" id="commentForm" method="post">
 	 						<input type="hidden" name="reportId" value="<s:property value='report.id'/>"/>
@@ -83,6 +84,64 @@
  			</s:if>
  		</tbody>
 	</table>
+	</div>
+	
+	
+	<div class="span12">
+	<table class="table">
+		<caption><b>车辆使用情况</b></caption>
+		<thead>
+			<th class="span2">车牌号</th>
+			<th class="span1">司机</th>
+			<th class="span2">使用日期</th>
+			<th class="span2">开始量程</th>
+			<th class="span2">结束量程</th>
+			<th class="span2">起始地点</th>
+			<th class="span2">到达地点</th>
+		</thead>
+		<tbody>
+			<s:iterator value="report.vehicleUsages" id="ve">
+				<tr>
+					<td><s:property value="#ve.licensePlateNumber"/></td>
+					<td><s:property value="#ve.driver"/></td>
+					<td><s:property value="#ve.fromDate"/></td>
+					<td><s:property value="#ve.startMileage"/></td>
+					<td><s:property value="#ve.endMileage"/></td>
+					<td><s:property value="#ve.fromPlace"/></td>
+					<td><s:property value="#ve.toPlace"/></td>
+				</tr>
+			</s:iterator>
+		</tbody>
+	</table>
+	</div>
+	
+	<div class="span12">
+		<table class="table">
+		<caption><b>车辆使用情况</b></caption>
+		<thead>
+			<th class="span2">车牌号</th>
+			<th class="span1">司机</th>
+			<th class="span2">使用日期</th>
+			<th class="span2">开始量程</th>
+			<th class="span2">结束量程</th>
+			<th class="span2">起始地点</th>
+			<th class="span2">到达地点</th>
+		</thead>
+		<tbody>
+			<s:iterator value="report.vehicleUsages" id="ve">
+				<tr>
+					<td><s:property value="#ve.licensePlateNumber"/></td>
+					<td><s:property value="#ve.driver"/></td>
+					<td><s:property value="#ve.fromDate"/></td>
+					<td><s:property value="#ve.startMileage"/></td>
+					<td><s:property value="#ve.endMileage"/></td>
+					<td><s:property value="#ve.fromPlace"/></td>
+					<td><s:property value="#ve.toPlace"/></td>
+				</tr>
+			</s:iterator>
+		</tbody>
+	</table>
+	</div>	
   </div>
 </body>
 </html>

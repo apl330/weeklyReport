@@ -1,35 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="styles/themes/default/easyui.css" type="text/css"
-	rel="stylesheet" />
-<link href="styles/themes/icon.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="styles/themes/icon.css"> 
 <script type="text/javascript" src="js/locale/easyui-lang-zh_CN.js"></script>
-
 <title>添加周报</title>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$('#fromDate, #toDate').datebox({
-							required : true
-						});
-
-						$("#draft").click(function() {
-									$.getJSON("save-report.action", $(
-											"#reportForm").serialize(),
+	$() .ready(function() {
+					 
+						/* $("#draft").click(function() {
+									$.getJSON("save-report.action", $( "#reportForm").serialize(),
 											function(data) {
 												$("#version").attr("value", data.report.version);
 												$("#reportId").attr("value", data.report.id);
 											});
-					 });
-
+					    });
+						
 						$("#commit").mouseover(function() {
 											$("#status") .attr( "value", "<s:property value='%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}'/>");
 						});
@@ -43,44 +33,49 @@
 						
 						$("#addAttach").click(function(){
 							$("#attachments").append($("#am").clone().removeAttr("id"));
+						}); */
+						
+						$("#fromDate, #toDate").datebox({
+							formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); }
 						});
+				
 						
 					});
 				function del(self){
 					$(self).parent().remove();
 				}
+				
+				function delRow(self){
+					$(self).parent().parent().remove();
+				}
+				
 </script>
 </head>
 <body>
 
-	<div class="clearfix span12">
-		<s:form enctype="multipart/form-data" cssClass="form-horizontal"
-			action="save-report.action" theme="simple" id="reportForm"
-			method="post">
-			<fieldset>
-				<legend>添加周报</legend>
+
+	<div id="tt" class="easyui-tabs" tools="#tab-tools" >
+		<div title="周报内容" tools="#p-tools" style="padding:20px;">
+			<p>
+	<s:form enctype="multipart/form-data" cssClass="form-horizontal" action="save-report.action" theme="simple" id="reportForm" 	method="post">
 				<div class="control-group">
 					<label class="control-label">项目名</label>
 					<div class="controls">
-						<s:textfield id="projectName" name="report.projectName"
-							cssClass="input-xlarge" />
+						<s:textfield id="projectName" name="report.projectName" cssClass="input-xlarge" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">地点</label>
 					<div class="controls">
-						<s:textfield rows="5" id="workPlace" name="report.workPlace"
-							cssClass="input-xlarge" />
+						<s:textfield rows="5" id="workPlace" name="report.workPlace" cssClass="input-xlarge" />
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">日期</label>
 					<div class="controls">
-						<s:textfield id="fromDate" cssStyle="width:125px;"
-							name="report.fromDate" />
+						<s:textfield id="fromDate" cssStyle="width:125px;" name="report.fromDate" />
 						&nbsp;至&nbsp;
-						<s:textfield id="toDate" name="report.toDate"
-							cssStyle="width:125px;" />
+						<s:textfield id="toDate" name="report.toDate" cssStyle="width:125px;" />
 					</div>
 				</div>
 				<div class="control-group">
@@ -103,56 +98,71 @@
 						<s:textarea rows="5" id="memo" name="report.memo" cssClass="span6" />
 					</div>
 				</div>
-
-				<div class="control-group">
-					<label class="control-label"><button type="button" id="addVehicleUsage" class="btn">添加车辆信息</button></label>
-					<div class="controls" id="vehicleUsages">
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<label class="control-label">
-					<button type="button" id="addAttach" class="btn">添加附件</button></label>
-					<div class="controls" id="attachments">
-					<s:file  name="upload"/>
-					</div>
-				</div>
-
-				<s:hidden name="status" value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}" id="status" />
-				<s:hidden id="reportId" name="report.id" />
-				<s:hidden id="version" name="report.version" />
-				<div class="form-actions">
-					<button class="btn btn-primary" type="submit" id="commit">呈报</button>
-					<button class="btn" type="reset">清空</button>
-					<button class="btn" type="button" id="draft">存为草稿</button>
-				</div>
-			</fieldset>
-		</s:form>
-	</div>
-	<!-- 重要: 页面模板 -->
-	<div style="display: none">
-		<div id="vu" class="vehicleUsageTemp">
-			<p>
-					<input placeholder="车牌号" type="text" name="report.vehicleUsage.licensePlateNumber" class="span2" />
-					<input placeholder="司机" type="text" name="report.vehicleUsage.driver" class="span1" />
-					<input placeholder="使用日期" type="text" name="report.vehicleUsage.toPlace" class="span2" />
-					<input placeholder="开始量程" type="text" name="report.vehicleUsage.startMileage" class="span2" /> 
-					<input placeholder="结束量程" type="text" name="report.vehicleUsage.endMileage" class="span2" /><br/>
-					<input placeholder="起始地点" type="text" name="report.vehicleUsage.fromPlace" class="span2" />
-					<input placeholder="到达地点" type="text" name="report.vehicleUsage.toPlace" class="span2" />
-			</p>
+					<s:hidden name="status" value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}" id="status" />
+					<s:hidden id="reportId" name="report.id" />
+					<s:hidden id="version" name="report.version" />
+			</s:form>
+	</p>
 		</div>
-		<div id="am">
-			<p>
-				<s:file  name="uploads"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button class="btn" onclick="del(this)" type="button">移除</button>
-			</p>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<div title="车辆使用" closable="true" style="padding:20px;" cache="false"  >
+			<div  id="vehicleUsages-added">
+							<table>
+							<thead>
+								<tr>
+									<th>车牌号</th>
+									<th>司机</th>
+									<th>使用日期</th>
+									<th>开始量程</th>
+									<th>结束量程</th>
+									<th>起始地点</th>
+									<th>到达地点</th>
+									<th>&nbsp;</th>
+								</tr>
+							</thead>
+							<tbody>
+								<s:iterator value="report.vehicleUsages" id="vr" >
+									<s:set name="ve" value="#vr" />
+									<tr>
+										<td><s:property /></td>
+										<td ><s:textfield theme="simple" value="%{#ve.licensePlateNumber}" name="vehicleUsages.licensePlateNumber" cssClass="span2"  disabled="true"/></td>
+										<td ><s:textfield theme="simple" value="%{#ve.driver}" cssClass="span1" disabled="true"/></td>
+										<td><s:property value="%{#ve.fromDate}"/><s:hidden name="vehicleUsages.fromDate"/></td>
+										<td ><s:textfield theme="simple" value="%{#ve.startMileage}" name="vehicleUsages.startMileage" cssClass="span2" disabled="true"/></td>
+										<td><s:textfield theme="simple" value="%{#ve.endMileage}" name="vehicleUsages.endMileage" cssClass="span2" disabled="true"/></td>
+										<td ><s:textfield theme="simple" value="%{#ve.fromPlace}" name="vehicleUsages.fromPlace" cssClass="span2" disabled="true"/></td>
+										<td><s:textfield theme="simple" value="%{#ve.toPlace}" name="vehicleUsages.toPlace" cssClass="span2" disabled="true"/></td>
+										<td><button type="button" onclick="delRow(this)" class="btn"/>移除</td>
+									</tr>
+								</s:iterator>
+							</tbody>
+							</table>						
+		 </div>
+		</div>
+		<div title="附件"  closable="true" style="padding:20px;">
 		</div>
 	</div>
 	
-		
+	<div id="tab-tools">
+		<a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-add" onclick="javascript:alert('add')"></a>
+		<a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-save" onclick="javascript:alert('save')"></a>
+	</div>
+	
 		
 </body>
-
-
 </html>

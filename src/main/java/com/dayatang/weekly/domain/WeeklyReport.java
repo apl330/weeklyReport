@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -131,8 +132,16 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 		return vehicleUsages;
 	}
 
+	public void setVehicleUsages(List<VehicleUsage> vehicleUsages) {
+		this.vehicleUsages = vehicleUsages;
+	}
+
 	public void addVehicleUsage(VehicleUsage vehicleUsage) {
 		vehicleUsages.add(vehicleUsage);
+	}
+
+	public void addVehicleUsages(List<VehicleUsage> vehicleUsages) {
+		this.vehicleUsages.addAll(vehicleUsages);
 	}
 
 	public void removeVehicleUsage(VehicleUsage vehicleUsage) {

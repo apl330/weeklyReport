@@ -42,17 +42,13 @@ public class SaveReportAction extends BaseAction {
 	@Action(results = { @Result(name = "success", type = "redirect", location = "report-list.action"), @Result(name = "input", type = "json") })
 	public String execute() {
 
-		/*for (VehicleUsage ve : report.getVehicleUsages()) {
-			System.out.println(ve.getDriver() + "\n\n\n");
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}*/
-
 		report.setAuthor(getCurrentUser());
+
+		for (VehicleUsage ve : vehicleUsages) {
+			if (ve != null) {
+				report.addVehicleUsage(ve);
+			}
+		}
 
 		if (status == WeeklyReport.STATUS_DRAFT) {// 草稿
 			this.reportApplication.saveReportAsDraft(report);

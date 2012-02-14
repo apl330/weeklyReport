@@ -1,4 +1,13 @@
-﻿(function($){
+/**
+ * jQuery EasyUI 1.2.5
+ * 
+ * Licensed under the GPL terms
+ * To use it on other terms please contact us
+ *
+ * Copyright(c) 2009-2011 stworthy [ stworthy@gmail.com ] 
+ * 
+ */
+(function($){
 var _1=false;
 function _2(e){
 var _3=$.data(e.data.target,"draggable").options;
