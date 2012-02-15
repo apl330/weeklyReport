@@ -1,5 +1,6 @@
 package com.dayatang.weekly.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -74,6 +76,12 @@ public class Attachment extends AbstractEntity {
 	
 	public static List<Attachment> findByReport(WeeklyReport report) {
 		return getRepository().find(QuerySettings.create(Attachment.class).eq("report", report));
+	}
+	
+	public static Attachment getLastOneOf(WeeklyReport report){
+		List<Attachment> results = new ArrayList<Attachment>();
+		results.addAll(getRepository().find(QuerySettings.create(Attachment.class).eq("report", report).desc("id")));
+		return results.get(0);
 	}
 	
 	@Override

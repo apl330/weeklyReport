@@ -67,7 +67,7 @@ public class VehicleUsage extends AbstractEntity {
 		QuerySettings<VehicleUsage> settings = QuerySettings.create(VehicleUsage.class).eq("report", report).desc("id");
 		List<VehicleUsage> results = new ArrayList<VehicleUsage>();
 		results.addAll(getRepository().find(settings));
-		return results.size() > 0 ? results.get(results.size()-1) : null;
+		return results.size() > 0 ? results.get(0) : null;
 		
 	}
 	

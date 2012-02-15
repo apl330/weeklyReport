@@ -30,6 +30,7 @@
     
     <div class="span11">
  	<table class="table">
+ 		<caption><b>周报内容</b></caption>
  		<tbody>
  			<tr>
  			<th class="span2">项目名</th>
@@ -86,7 +87,6 @@
 	</table>
 	</div>
 	
-	
 	<div class="span12">
 	<table class="table">
 		<caption><b>车辆使用情况</b></caption>
@@ -115,33 +115,6 @@
 	</table>
 	</div>
 	
-	<div class="span12">
-		<table class="table">
-		<caption><b>车辆使用情况</b></caption>
-		<thead>
-			<th class="span2">车牌号</th>
-			<th class="span1">司机</th>
-			<th class="span2">使用日期</th>
-			<th class="span2">开始量程</th>
-			<th class="span2">结束量程</th>
-			<th class="span2">起始地点</th>
-			<th class="span2">到达地点</th>
-		</thead>
-		<tbody>
-			<s:iterator value="report.vehicleUsages" id="ve">
-				<tr>
-					<td><s:property value="#ve.licensePlateNumber"/></td>
-					<td><s:property value="#ve.driver"/></td>
-					<td><s:property value="#ve.fromDate"/></td>
-					<td><s:property value="#ve.startMileage"/></td>
-					<td><s:property value="#ve.endMileage"/></td>
-					<td><s:property value="#ve.fromPlace"/></td>
-					<td><s:property value="#ve.toPlace"/></td>
-				</tr>
-			</s:iterator>
-		</tbody>
-	</table>
-	</div>	
   </div>
 </body>
 </html>

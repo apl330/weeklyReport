@@ -3,6 +3,7 @@
 <decorators defaultdir="/WEB-INF/decorators">
     <!-- Any urls that are excluded will never be decorated by Sitemesh -->
     <excludes>
+        <pattern>/add-attachment.action*</pattern>
         <pattern>/styles/*</pattern>
         <pattern>/js/*</pattern>
         <pattern>/images/*</pattern>

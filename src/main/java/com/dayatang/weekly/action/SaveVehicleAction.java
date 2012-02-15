@@ -21,12 +21,11 @@ public class SaveVehicleAction extends BaseAction {
 	public String execute() {
 
 		if (reportId > 0L && vehicleUsage != null) {
-			WeeklyReport report = WeeklyReport.get(reportId);
-			report.getVehicleUsages().add(vehicleUsage);
-			this.reportApplication.saveEntity(report);
+			WeeklyReport report = WeeklyReport.load(WeeklyReport.class, reportId);
+			vehicleUsage.setReport(report);
+			this.reportApplication.saveEntity(vehicleUsage);
 			vehicleUsage = VehicleUsage.getLastOneOf(report);
 		}
-
 		return ActionSupport.SUCCESS;
 	}
 
