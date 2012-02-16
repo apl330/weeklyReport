@@ -8,11 +8,12 @@
 	<title> 周报列表 </title>
 </head>
 <body>
-<div class="clearfix span6">
+<div class="container span6">
   <a href="add-report.action" class="btn">添加</a>
 </div>
-  <div class="clearfix span10">
-	<display:table name="reports" requestURI="/report-list.action"  id="report" pagesize="15" class="table" export="true">
+<div class="container-fluid">
+<div	class="row">
+		<display:table name="reports" requestURI="/report-list.action"  id="report" pagesize="15" class="table" export="true">
 		<s:set id="DRAFT" value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_DRAFT}" />
 		<display:column style="width:80px;" property="submitDate" title="呈报日期" format="{0,date,yyyy-MM-dd}" sortable="true"/>
 		<display:column style="width:80px;"   title="呈报人" sortable="true">
@@ -30,6 +31,8 @@
 			 </s:else>
 		</display:column>
 	</display:table>
-	</div>
+</div>
+</div>
+
 </body>
 </html>

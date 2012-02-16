@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,6 +29,7 @@
 <body>
   <div class="row">
   <s:set id="commented" value="commented"/>
+  <security:authorize ifAnyGranted="ROLE_HEAD"> 
     <s:if test="#commented == false">
   <div  class="span5">
 	  <button id="comment"  class="btn" type="button" >评阅</button>
@@ -42,7 +44,7 @@
  	</div>
   </div>
     </s:if>
-    
+    </security:authorize>
     <div class="span11">
  	<table class="table" >
  		<caption><b>周报内容</b></caption>

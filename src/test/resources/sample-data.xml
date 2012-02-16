@@ -16,17 +16,17 @@
  <weekly_reports id="2" version="1" project_name="广东清远2" author_id="14" from_date="2011-01-01" to_date="2011-08-05" work_place="广东清远工作地址"  done_works="已经做了的2" todo_works="计划工作" comment="批阅" status="2" memo="在" submit_date="2011-08-06" comment_date="2011-08-06"/>
  <weekly_reports id="3" version="1" project_name="广东清远3" author_id="14" from_date="2011-01-01" to_date="2011-08-05" work_place="广东清远工作地址"  done_works="已经做了的3" todo_works="计划工作" comment="批阅" status="3" memo="在" submit_date="2011-08-06" comment_date="2011-08-06"/>
  <weekly_reports id="4" version="1" project_name="广东清远4" author_id="14" from_date="2011-01-01" to_date="2011-08-05" work_place="广东清远工作地址"  done_works="已经做了的34" todo_works="计划工作" comment="批阅" status="3" memo="在" submit_date="2011-08-06" comment_date="2011-08-06"/>
-  <user_roles user_id="14" role_name="ROLE_SUPERVISOR"/>
-  <user_roles user_id="15" role_name="ROLE_PMO"/>
-  <user_roles user_id="16" role_name="ROLE_USER"/>
-  <user_roles user_id="17" role_name="ROLE_USER"/>
-  <user_roles user_id="18" role_name="ROLE_USER"/>
-  <user_roles user_id="19" role_name="ROLE_USER"/>
-  <user_roles user_id="20" role_name="ROLE_USER"/>
-  <user_roles user_id="21" role_name="ROLE_USER"/>
-  <user_roles user_id="22" role_name="ROLE_USER"/>
-  <user_roles user_id="23" role_name="ROLE_USER"/>
-  <user_roles user_id="24" role_name="ROLE_USER"/>
+  <user_roles user_id="14" role_name="ROLE_HEAD"/>
+  <user_roles user_id="15" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="16" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="17" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="18" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="19" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="20" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="21" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="22" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="23" role_name="ROLE_MANAGER"/>
+  <user_roles user_id="24" role_name="ROLE_MANAGER"/>
   <vehicle_usages id="1" version="0" report_id="1" driver="黄师傅" end_mileage="2" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" />
   <vehicle_usages id="2" version="0" report_id="1" driver="李师傅" end_mileage="4" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place=""/>
   <vehicle_usages id="3" version="0" report_id="1" driver="何师傅" end_mileage="5" start_date="2010-01-01" from_place="" license_plate_number="" start_mileage="1" to_place="" />

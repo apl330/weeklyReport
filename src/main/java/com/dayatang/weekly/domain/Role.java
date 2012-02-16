@@ -9,28 +9,12 @@ import java.io.Serializable;
 public enum Role implements Serializable {
 	
 	/**
-	 * 管理层
+	 * 老板
 	 */
-	ROLE_PMO,
-	
+	ROLE_HEAD,
 	/**
-	 * 系统管理员
+	 * 呈报人
 	 */
-	ROLE_SUPERVISOR,
-
-	/**
-	 * 事业部经理
-	 */
-	ROLE_DM,
-	
-	/**
-	 * 项目经理
-	 */
-	ROLE_PM,
-	
-	/**
-	 * 普通用户
-	 */
-	ROLE_USER
+	ROLE_MANAGER
 	
 }

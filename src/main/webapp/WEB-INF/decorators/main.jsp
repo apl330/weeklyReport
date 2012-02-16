@@ -30,25 +30,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a href="#" class="brand">工作周报</a>
+        <a href="#" class="brand">工作周报  </a>
         <div class="nav-collapse">
           <ul class="nav">
             <li id="list" class="active"><a href="#" >周报列表</a></li>
-            <li id="info"><a href="edit-user.action">编辑信息</a></li>
-            <li><a href="#">退出</a></li>
+            <!-- <li id="info"><a href="edit-user.action">编辑<s:property value="currentUser.lastName"/>信息</a></li> -->
+            <li><a href="j_spring_cas_security_logout"> 退出</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div>
     </div><!-- /navbar-inner -->
   </div>
+
 <div class="container">
 <div class="well">
 <decorator:body/>
 </div>
   </div>
 <div class="container">
-    <p class="pull-left">&copy; Copyright <a href="http://www.suilink.com">广州日海</a>.</p>
-    <p class="pull-right"><a href="http://www.dayatang.com">power by 广州大雅堂</a></p>
+    <p class="pull-left">&copy; Copyright <a href="http://www.suilink.com">广东日海通信工程有限公司</a>.</p>
+    <p class="pull-right">power by <a href="http://www.dayatang.com">广州大雅堂信息科技有限公司</a></p>
 </div>
   
 </body>
