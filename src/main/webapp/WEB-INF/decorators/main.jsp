@@ -33,8 +33,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <a href="#" class="brand">工作周报</a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li class="active"><a href="#" >周报列表</a></li>
-            <li><a href="#">编辑信息</a></li>
+            <li id="list" class="active"><a href="#" >周报列表</a></li>
+            <li id="info"><a href="edit-user.action">编辑信息</a></li>
             <li><a href="#">退出</a></li>
           </ul>
         </div><!-- /.nav-collapse -->

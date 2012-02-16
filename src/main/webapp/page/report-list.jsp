@@ -15,7 +15,9 @@
 	<display:table name="reports" requestURI="/report-list.action"  id="report" pagesize="15" class="table" export="true">
 		<s:set id="DRAFT" value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_DRAFT}" />
 		<display:column style="width:80px;" property="submitDate" title="呈报日期" format="{0,date,yyyy-MM-dd}" sortable="true"/>
-		<display:column style="width:80px;"  property="author.lastName" title="呈报人" sortable="true"/>
+		<display:column style="width:80px;"   title="呈报人" sortable="true">
+			<s:property value="%{#attr['report'].author.firstName}"/><s:property value="%{#attr['report'].author.lastName}"/>
+		</display:column>
 		<display:column property="projectName" title="项目" sortable="true"/>
 		<display:column property="workPlace" title="工作地点"  sortable="true"/>
 		<display:column style="width:50px;" property="statusString" title="状态"  sortable="true"/>

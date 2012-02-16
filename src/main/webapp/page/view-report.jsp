@@ -35,6 +35,7 @@
 	 		<s:form theme="simple" action="save-comment.action" id="commentForm" method="post">
 	 				<input type="hidden" name="reportId" value="<s:property value='report.id'/>"/>
 	 				<s:textarea theme="simple" id="txtCom" name="commen"  cols="4" rows="4" />
+	 				<p/>
 	 				<button class="btn btn-primary" id="btnCom" type="submit">确定</button>
 	 				<button class="btn" id="cancel" type="button">取消</button>
 	 	 </s:form>
@@ -50,7 +51,7 @@
  			<th class="span2">项目名</th>
  			<td class="span4"><s:property value="report.projectName"/></td>
  			<th>呈报</th>
- 			<td><s:property value="report.author.lastName"/> &nbsp;&nbsp; <s:date name="report.submitDate"  format="yyyy-MM-dd"/></td>
+ 			<td><s:property value="report.author.firstName"/><s:property value="report.author.lastName"/> &nbsp;&nbsp; <s:date name="report.submitDate"  format="yyyy-MM-dd"/></td>
  			</tr>
  			<tr>
  				<th>工作日期</th>

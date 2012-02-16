@@ -36,7 +36,7 @@ public class ViewReportAction extends BaseAction {
 		
 		return ActionSupport.SUCCESS;
 	}
-//将 \n \r转换成<br/>
+	//将 \n \r转换成<br/>
 	 private String textToHtml(String data) {
 		 if (data == null) {
 			 return "";
