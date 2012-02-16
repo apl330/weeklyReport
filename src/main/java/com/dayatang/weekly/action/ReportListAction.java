@@ -18,6 +18,7 @@ public class ReportListAction extends BaseAction {
 		if(getUserHolder().getCurrentUser().getRoles().contains(Role.ROLE_HEAD)){
 			Integer[] status = new Integer[] { WeeklyReport.STATUS_COMMENTED, WeeklyReport.STATUS_SUBMITTED };
 			reports.addAll(WeeklyReport.findAll(status));
+			reports.addAll(WeeklyReport.findByAuthor(getCurrentUser(), new Integer[]{WeeklyReport.STATUS_DRAFT}));
 		}else{
 			//员工
 			Integer[] status = new Integer[] { WeeklyReport.STATUS_COMMENTED, WeeklyReport.STATUS_SUBMITTED,WeeklyReport.STATUS_DRAFT };

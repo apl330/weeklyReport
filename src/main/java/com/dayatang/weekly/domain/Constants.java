@@ -6,10 +6,6 @@ import com.dayatang.utils.DateUtils;
 
 public interface Constants {
 	
-	public static final String ROLE_HEAD = "ROLE_HEAD";
-	
-	public static final String ROLE_MANAGER = "ROLE_MANAGER";
-	
 	public static final String CHARSET = "charset";
 
 	public static final String UPLOAD_DIR = "upload.dir";

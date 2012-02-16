@@ -33,8 +33,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <a href="#" class="brand">工作周报  </a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li id="list" class="active"><a href="#" >周报列表</a></li>
-            <!-- <li id="info"><a href="edit-user.action">编辑<s:property value="currentUser.lastName"/>信息</a></li> -->
+            <li id="list" class="active"><a href="report-list.action" >周报列表</a></li>
+             <security:authorize ifAnyGranted="ROLE_MANAGER">
+             		<li id="addlink" ><a href="add-report.action" >添加周报</a></li>
+              </security:authorize>
+            
             <li><a href="j_spring_cas_security_logout"> 退出</a></li>
           </ul>
         </div><!-- /.nav-collapse -->

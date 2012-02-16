@@ -251,7 +251,7 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	}
 
 	public static List<WeeklyReport> findAll(Integer[] status) {
-		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).desc("submitDate");
+		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).desc("submitDate").desc("id");
 		if (status.length > 0) {
 			querySettings = querySettings.in("status", status);
 		}
@@ -325,7 +325,7 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	}
 
 	public boolean isAllowCommentBy(User user) {
-		return user.getRoles().contains(Constants.ROLE_HEAD) && getStatus() > WeeklyReport.STATUS_DRAFT;
+		return user.getRoles().contains(Role.ROLE_HEAD) && getStatus() > WeeklyReport.STATUS_DRAFT;
 	}
 
 }

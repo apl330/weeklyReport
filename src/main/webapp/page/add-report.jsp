@@ -11,6 +11,12 @@
 <title>添加周报</title>
 <script type="text/javascript">
 	$() .ready(function() {
+						
+						$("#list").attr("class","");
+						$("#addlink").attr("class","active");
+		
+						$(".numb").	numberbox({"max":10000000, "min":0 });
+						
 						//保存草稿
 						$("#draft").click(function() {
 									$.getJSON("save-report.action", $( "#reportForm").serialize(),
@@ -45,7 +51,7 @@
 						//日期控件
 						$("#fromDate, #toDate").datebox({
 							formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); }
-						});
+						});6000000
 						
 						//处理草稿未保存而添加附件的情况
 						$("#tt").tabs({"onSelect":function(title){
@@ -194,9 +200,9 @@
 				<s:form theme="simple"  method="post" action="save-vehicle.action" id="vuForm">
 				<input placeholder="车牌号" type="text" name="vehicleUsage.licensePlateNumber" class="span2" />
 				<input placeholder="司机" type="text" name="vehicleUsage.driver" class="span1" />
-				<input placeholder="使用日期" type="text" name="vehicleUsage.fromDate" class="datebox "/>
-				<input placeholder="开始量程" type="text" name="vehicleUsage.startMileage" class="span2" /> 
-				<input placeholder="结束量程" type="text" name="vehicleUsage.endMileage" class="span2" /><br/>
+				<input placeholder="使用日期" type="text" name="vehicleUsage.fromDate" class="datebox " style="width:90px;"/>
+				<input placeholder="开始量程" type="text" name="vehicleUsage.startMileage" class="numb span2" /> 
+				<input placeholder="结束量程" type="text" name="vehicleUsage.endMileage" class="numb span2" /><br/>
 				<input placeholder="起始地点" type="text" name="vehicleUsage.fromPlace" class="span2" />
 				<input placeholder="到达地点" type="text" name="vehicleUsage.toPlace" class="span2" />
 				<input type="hidden"  id="veReportId" name="reportId"  class="reportId" value="${param.reportId }"/>

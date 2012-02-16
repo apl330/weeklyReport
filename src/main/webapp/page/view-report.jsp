@@ -6,18 +6,6 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<script type="text/javascript">
-		$().ready(function(){
-			$("#comment").click(function(){
-				$("#content").show();
-				$("#comment").hide();
-			});
-			$("#cancel").click(function(){
-				$("#content").hide();
-				$("#comment").show();
-			});
-		});
-	</script>
 	<style type="text/css">
 		.table th {
 		    font-weight: bold;
@@ -31,17 +19,14 @@
   <s:set id="commented" value="commented"/>
   <security:authorize ifAnyGranted="ROLE_HEAD"> 
     <s:if test="#commented == false">
-  <div  class="span5">
-	  <button id="comment"  class="btn" type="button" >评阅</button>
-	  <div id="content" style="display: none;">
+  <div class="span11">
 	 		<s:form theme="simple" action="save-comment.action" id="commentForm" method="post">
 	 				<input type="hidden" name="reportId" value="<s:property value='report.id'/>"/>
-	 				<s:textarea theme="simple" id="txtCom" name="commen"  cols="4" rows="4" />
-	 				<p/>
-	 				<button class="btn btn-primary" id="btnCom" type="submit">确定</button>
-	 				<button class="btn" id="cancel" type="button">取消</button>
+	 				<s:textarea theme="simple" id="txtCom" name="commen" cols="50" cssClass="span6" rows="2"  />
+	 				<div >
+	 				<button class="btn btn-primary" id="btnCom" type="submit">评阅</button>
+	 				</div>
 	 	 </s:form>
- 	</div>
   </div>
     </s:if>
     </security:authorize>
