@@ -7,23 +7,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="styles/bootstrap.css" rel="stylesheet" type="text/css" />
 	<script src="js/jquery-1.7.1.min.js"></script>
-	<script src="js/easyui.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#attaForm").submit(function(){
+				var up = $("#upload").val();
+				if(up==null || up == ""){
+					alert("附件不能为空!");
+					return false;
+				}else{
+					return true;
+				}
+			});
+		});
+	</script>
 <title>Insert title here</title>
 </head>
 <body>
-<table>
+<table style="width:300px;">
 	<thead>
 		<tr>
-			<td>附件名</td>
-			<td>&nbsp;</td>
+			<th style="width:150px;">附件名</td>
+			<th>&nbsp;</td>
 		</tr>
-		
 	</thead>
 	<tbody>
 	<s:iterator value="attas" id="at">
 		<tr>
 			<td><s:property value="#at.fileName"/></td>
-			<td><a>下载</a></td>
+			<td><a href="remove-attachment.action?id=<s:property value='#at.id'/>&reportId=<s:property value='#at.report.id'/>">删除</a></td>
 		</tr>
 	</s:iterator>
 	</tbody>

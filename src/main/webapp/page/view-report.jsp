@@ -17,6 +17,12 @@
 			});
 		});
 	</script>
+	<style type="text/css">
+		.table th {
+		    font-weight: bold;
+		    vertical-align: top;
+		}
+	</style>
 	<title> 查看 </title>
 </head>
 <body>
@@ -25,11 +31,19 @@
     <s:if test="#commented == false">
   <div  class="span5">
 	  <button id="comment"  class="btn" type="button" >评阅</button>
+	  <div id="content" style="display: none;">
+	 		<s:form theme="simple" action="save-comment.action" id="commentForm" method="post">
+	 				<input type="hidden" name="reportId" value="<s:property value='report.id'/>"/>
+	 				<s:textarea theme="simple" id="txtCom" name="commen"  cols="4" rows="4" />
+	 				<button class="btn btn-primary" id="btnCom" type="submit">确定</button>
+	 				<button class="btn" id="cancel" type="button">取消</button>
+	 	 </s:form>
+ 	</div>
   </div>
     </s:if>
     
     <div class="span11">
- 	<table class="table">
+ 	<table class="table" >
  		<caption><b>周报内容</b></caption>
  		<tbody>
  			<tr>
@@ -62,18 +76,6 @@
  					<s:property value="report.memo" escape="false" />
  				</td>
  			</tr>
- 			<tr id="content" style="display: none;">
- 				<th>评阅</th>
- 				<td colspan="3">
-	 				<s:form theme="simple" action="save-comment.action" id="commentForm" method="post">
-	 						<input type="hidden" name="reportId" value="<s:property value='report.id'/>"/>
-	 					    <s:textarea theme="simple" id="txtCom" name="commen"  cols="4" rows="4" />
-	 						<button class="btn btn-primary" id="btnCom" type="submit">确定</button>
-	 						<button class="btn" id="cancel">取消</button>
-	 				</s:form>
- 				</td>
- 			</tr>
- 			
  			<s:if test="#commented == true">
  			<tr>
  				<th>评语</th>
@@ -83,6 +85,17 @@
  				</td>
  			</tr>
  			</s:if>
+ 			<tr>
+ 				<th >附件</th>
+ 				<td colspan="3">
+	 			<s:iterator value="attachments" id="at">
+	 				<p>
+	 				<a href="${basePath }/dowload-attachment.action?id=<s:property value='#at.id'/>" > <s:property value="#at.fileName"/> </a>
+	 				</p>
+ 				</s:iterator>
+ 				</td>
+ 			</tr>
+ 			
  		</tbody>
 	</table>
 	</div>
@@ -114,7 +127,8 @@
 		</tbody>
 	</table>
 	</div>
-	
   </div>
+
+  
 </body>
 </html>

@@ -7,12 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="styles/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="styles/themes/icon.css"> 
-<script type="text/javascript" src="js/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/swfobject.js"></script>
-<script type="text/javascript" src="js/jquery.uploadify.v2.1.4.min.js"></script>
+<script type="text/javascript" src="js/locale/easyui-lang-zh_TW.js"  charset="utf-8" ></script>
 <title>添加周报</title>
 <script type="text/javascript">
 	$() .ready(function() {
+						//保存草稿
 						$("#draft").click(function() {
 									$.getJSON("save-report.action", $( "#reportForm").serialize(),
 											function(data) {
@@ -21,13 +20,15 @@
 											});
 					    });
 						
+						//改变周报的状态
 						$("#commit").mouseover(function() {
 											$("#status") .attr( "value", "<s:property value='%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_SUBMITTED}'/>");
 						});
 						$("#draft").mouseover(function() {
 							$("#status").attr("value","<s:property value='%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_DRAFT}'/>");
 						});
-
+						
+						//添加车辆使用
 						$("#addVehicleUsage").click(function() {
 									var id = $("#veReportId").val();
 									if(id == 0 || id == null || id == ""){
@@ -35,21 +36,18 @@
 										msg("请先填写周报内容再添加车辆使用情况");
 									}else{
 										$("#vu").show();
-										$(".datebox").datebox();	
+										$(".datebox").datebox({
+											formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); }
+										});	
 									}
-									
 						});
 						
-						$("#addAttach").click(function(){
-							$("#attachments").append($("#am").clone().removeAttr("id"));
-						}); 
-						
-						
+						//日期控件
 						$("#fromDate, #toDate").datebox({
 							formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); }
 						});
 						
-						
+						//处理草稿未保存而添加附件的情况
 						$("#tt").tabs({"onSelect":function(title){
 							if("附件" == title){
 								var id = $("#globalId").val();
@@ -62,10 +60,8 @@
 								}
 							}	
 						}});
-						
-						
-					});
-	
+					});//end of ready 
+				
 				function msg(str){
 					$.messager.show({msg:str, showType: "show", title:"注意"});
 				}
@@ -112,7 +108,7 @@
 				//添加车辆使用
 				function saveVehicle(){
 					$.getJSON("save-vehicle.action", $('#vuForm').serialize(), function(result){
-						hiden();
+						hiden(); //隐藏输入表单
 						var vehicle = result.vehicleUsage;
 						$("#veBody").append($("<tr><td>"+vehicle.licensePlateNumber + "  " + vehicle.driver +"</td>"+
 																	"<td>"+vehicle.fromDate+"</td>"+
@@ -129,7 +125,7 @@
 </head>
 <body>
 
-	<button class="btn" type="button" onclick="commit();">呈报</button>
+	<button id="commit" class="btn" type="button" onclick="commit();">呈报</button>
 	<p/>		
 	<div id="tt" class="easyui-tabs">
 		<div title="周报内容"  style="padding:20px;">
@@ -150,16 +146,19 @@
 				<div class="control-group">
 					<label class="control-label">日期</label>
 					<div class="controls">
-						<s:textfield id="fromDate" cssStyle="width:125px;" name="report.fromDate" />
+						<s:set id="fDate" value="report.fromDate"/>
+						<s:set id="tDate" value="report.toDate"/>
+						<input  style="width:100px;"  class="span2" type="text" id="fromDate" name="report.fromDate" value="<s:date name="#fDate" format="yyyy-MM-dd"/>" />
+						<%-- <s:textfield id="fromDate" cssStyle="width:125px;" name="report.fromDate"  value="#fDate"/> --%>
 						&nbsp;至&nbsp;
-						<s:textfield id="toDate" name="report.toDate" cssStyle="width:125px;" />
+						<input style="width:100px;" type="text" id="toDate" name="report.toDate" value="<s:date name="#tDate" format="yyyy-MM-dd"/>" />
+						<%-- <s:textfield id="toDate" name="report.toDate" cssStyle="width:125px;" /> --%>
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label">工作内容</label>
 					<div class="controls">
-						<s:textarea rows="5" id="doneWorks" name="report.doneWorks"
-							cssClass="span6" />
+						<s:textarea  rows="5" cols="50" id="doneWorks" name="report.doneWorks" cssClass="span6"  />
 					</div>
 				</div>
 				<div class="control-group">
@@ -201,7 +200,7 @@
 				<input placeholder="起始地点" type="text" name="vehicleUsage.fromPlace" class="span2" />
 				<input placeholder="到达地点" type="text" name="vehicleUsage.toPlace" class="span2" />
 				<input type="hidden"  id="veReportId" name="reportId"  class="reportId" value="${param.reportId }"/>
-				<button class="btn" type=button onclick="saveVehicle()">提交</button>&nbsp;&nbsp;&nbsp;
+				<button class="btn btn-primary" type=button onclick="saveVehicle()">提交</button>&nbsp;&nbsp;&nbsp;
 				<button class="btn"  onclick="hiden()" type="button">移除</button>
 				</s:form>
 		</div>
@@ -241,7 +240,7 @@
 		</div>
 		
 		<div title="附件"   style="padding:20px;"  cache="false" >
-			<iframe scrolling="yes" id="iframe"  class="span10" height="300" frameborder="0"></iframe>
+			<iframe scrolling="auto" id="iframe"   class="span10" height=300 frameborder="0"></iframe>
 		</div>
 	</div>
 

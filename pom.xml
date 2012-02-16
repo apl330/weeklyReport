@@ -9,7 +9,6 @@
 	<!-- 系统环境变量 -->
 	<properties>
 		<!-- Application settings -->
-		<app.name>weekly</app.name>
 		<dayatang.commons.version>2.6</dayatang.commons.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<hibernate.version>3.6.9.Final</hibernate.version>
@@ -34,7 +33,7 @@
 		<h2.activeByDefault>false</h2.activeByDefault>
 		<db.type>h2</db.type>
 		<db.host>localhost</db.host>
-		<db.name>${app.name}</db.name>
+		<db.name>weekly</db.name>
 		<dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
 		<dbunit.dataTypeFactoryName>org.dbunit.ext.h2.H2DataTypeFactory</dbunit.dataTypeFactoryName>
 		<jdbc.groupId>com.h2database</jdbc.groupId>
@@ -44,24 +43,13 @@
 		<jdbc.url><![CDATA[jdbc:h2:${basedir}/target/${db.name}]]></jdbc.url>
 		<jdbc.username>sa</jdbc.username>
 		<jdbc.password />
-		<hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
-		<hibernate.query.substitutions>true 'Y', false 'N'</hibernate.query.substitutions>
-		<hibernate.cache.provider_class>org.hibernate.cache.EhCacheProvider</hibernate.cache.provider_class>
-		<hibernate.cache.use_query_cache>true</hibernate.cache.use_query_cache>
-		<hibernate.cache.use_second_level_cache>true</hibernate.cache.use_second_level_cache>
-		<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
-		<hibernate.show_sql>false</hibernate.show_sql>
-		<hibernate.format_sql>true</hibernate.format_sql>
-		<hibernate.connection.autocommit>false</hibernate.connection.autocommit>
-		<hibernate.use.sql.comments>true</hibernate.use.sql.comments>
-		<h2.activeByDefault>false</h2.activeByDefault>
 
 		<cargo.port>8080</cargo.port>
-		<cargo.context>${app.name}</cargo.context>
+		<cargo.context>weekly</cargo.context>
 		<cas.server.host>www.dayatang.com:8080</cas.server.host>
-		<cas.service.host>localhost:${cargo.port}</cas.service.host>
+		<cas.service.host>localhost:${cargo.port}/weekly</cas.service.host>
 
-		<upload.path>/tmp/${app.name}</upload.path>
+		<upload.path>/tmp/weekly</upload.path>
 		<java.tools.jar>${env.JAVA_HOME}/lib/tools.jar</java.tools.jar>
 	</properties>
 
@@ -799,7 +787,7 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<db.name>${app.name}db</db.name>
+				<db.name>weeklydb</db.name>
 			</properties>
 		</profile>
 		<!-- ================= Database Profiles ================= -->

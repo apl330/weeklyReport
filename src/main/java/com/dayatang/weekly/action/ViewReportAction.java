@@ -27,12 +27,26 @@ public class ViewReportAction extends BaseAction {
 		}
 
 		report = WeeklyReport.get(reportId);
-
+		
+		report.setComment(textToHtml(report.getComment()));
+		report.setDoneWorks(textToHtml(report.getDoneWorks()));
+		report.setToDoWorks(textToHtml(report.getToDoWorks()));
+		
 		attachments.addAll(Attachment.findByReport(report));
 		
 		return ActionSupport.SUCCESS;
 	}
-
+//将 \n \r转换成<br/>
+	 private String textToHtml(String data) {
+		 if (data == null) {
+			 return "";
+		 }
+		 String result = data.replaceAll("\n\r", "<br>");
+		 result = result.replaceAll("\n", "<br/>");
+		 result = result.replaceAll("\r", "<br/>");
+		 return result;
+	 }
+	
 	public boolean getCommented() {
 		if (report.getStatus() == WeeklyReport.STATUS_COMMENTED) {
 			return true;

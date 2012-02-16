@@ -17,8 +17,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<base href="<%=basePath%>"/>
 	<link href="styles/bootstrap.css" rel="stylesheet" type="text/css" />
-	<script src="js/jquery-1.7.1.min.js"></script>
-	<script src="js/easyui.js"></script>
+	<script type="text/javascript" src="js/jquery-1.7.1.min.js"  charset="utf-8"></script>
+	<script type="text/javascript" src="js/easyui.js"  charset="utf-8"></script>
 	<decorator:head/>
 </head>
 <body>
