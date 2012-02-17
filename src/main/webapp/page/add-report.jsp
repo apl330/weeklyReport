@@ -15,7 +15,9 @@
 						$("#list").attr("class","");
 						$("#addlink").attr("class","active");
 		
-						$(".numb").	numberbox({"max":10000000, "min":0 });
+						$("#numb1,#numb2").numberbox({"max":10000000, "min":0 });
+						
+						$("#projectName").focus();
 						
 						//保存草稿
 						$("#draft").click(function() {
@@ -34,33 +36,19 @@
 							$("#status").attr("value","<s:property value='%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_DRAFT}'/>");
 						});
 						
-						//添加车辆使用
-						$("#addVehicleUsage").click(function() {
-									var id = $("#veReportId").val();
-									if(id == 0 || id == null || id == ""){
-										$("#tt").tabs("select",0);
-										msg("请先填写周报内容再添加车辆使用情况");
-									}else{
-										$("#vu").show();
-										$(".datebox").datebox({
-											formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); }
-										});	
-									}
-						});
-						
 						//日期控件
-						$("#fromDate, #toDate").datebox({
+						$("#fromDate, #toDate,.datebox").datebox({
 							formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); }
-						});6000000
+						});
 						
 						//处理草稿未保存而添加附件的情况
 						$("#tt").tabs({"onSelect":function(title){
-							if("附件" == title){
+							if("附件" == title || "车辆使用" == title){
 								var id = $("#globalId").val();
 								if(id == 0 || id == null || id == ""){
 									$("#tt").tabs("select",0);
 									$("#projectName").focus();
-									msg("请先填写周报内容再添加附件");
+									msg("请先填写周报内容");
 								}else{
 									$("#iframe").attr("src", "add-attachment.action?reportId=" + id);
 								}
@@ -90,17 +78,6 @@
 					return false;
 				}
 	
-				//隐藏车辆表单
-				function hiden(){
-					//将表单中的值清空
-					$("#vuForm input").each(function(i, v){
-							if(v.id != "veReportId"){
-								$(v).attr("value","");
-							}
-					});
-					$("#vu").hide();
-				}
-				
 				//移除车辆使用
 				function rmVe(id,self){
 					var veId = id;
@@ -114,7 +91,6 @@
 				//添加车辆使用
 				function saveVehicle(){
 					$.getJSON("save-vehicle.action", $('#vuForm').serialize(), function(result){
-						hiden(); //隐藏输入表单
 						var vehicle = result.vehicleUsage;
 						$("#veBody").append($("<tr><td>"+vehicle.licensePlateNumber + "  " + vehicle.driver +"</td>"+
 																	"<td>"+vehicle.fromDate+"</td>"+
@@ -131,7 +107,8 @@
 </head>
 <body>
 
-	<button id="commit" class="btn" type="button" onclick="commit();">呈报</button>
+	<button id="commit" class="btn" type="button" onclick="commit();">呈报</button> &nbsp;
+	<button class="btn" type="button" id="draft">存为草稿</button>
 	<p/>		
 	<div id="tt" class="easyui-tabs">
 		<div title="周报内容"  style="padding:20px;">
@@ -185,7 +162,6 @@
 					<s:hidden id="version" name="report.version" />
 				<div class="form-actions">
 					<button class="btn" type="reset">清空</button>
-					<button class="btn" type="button" id="draft">存为草稿</button>
 				</div>
 			</s:form>
 		</div>
@@ -193,21 +169,17 @@
 		
 		
 		<div title="车辆使用"  style="padding:20px;" cache="false"  >
-		<div>
-			<button class="btn" id="addVehicleUsage">添加</button>
-		</div>
-		<div style="display: none;" id="vu" class="alert alert-info">
+		<div  id="vu" class="">
 				<s:form theme="simple"  method="post" action="save-vehicle.action" id="vuForm">
 				<input placeholder="车牌号" type="text" name="vehicleUsage.licensePlateNumber" class="span2" />
 				<input placeholder="司机" type="text" name="vehicleUsage.driver" class="span1" />
-				<input placeholder="使用日期" type="text" name="vehicleUsage.fromDate" class="datebox " style="width:90px;"/>
-				<input placeholder="开始量程" type="text" name="vehicleUsage.startMileage" class="numb span2" /> 
-				<input placeholder="结束量程" type="text" name="vehicleUsage.endMileage" class="numb span2" /><br/>
+				<input placeholder="使用日期" type="text" name="vehicleUsage.fromDate" class="datebox"  style="width:90px;"/>
+				<input placeholder="开始里程" type="text" name="vehicleUsage.startMileage"  id="numb1" class="input-small" /> 
+				<input placeholder="结束里程" type="text" name="vehicleUsage.endMileage" id="numb2" class="input-small " />
 				<input placeholder="起始地点" type="text" name="vehicleUsage.fromPlace" class="span2" />
 				<input placeholder="到达地点" type="text" name="vehicleUsage.toPlace" class="span2" />
 				<input type="hidden"  id="veReportId" name="reportId"  class="reportId" value="${param.reportId }"/>
-				<button class="btn btn-primary" type=button onclick="saveVehicle()">提交</button>&nbsp;&nbsp;&nbsp;
-				<button class="btn"  onclick="hiden()" type="button">移除</button>
+				<button class="btn btn-primary" type=button onclick="saveVehicle()">添加</button>
 				</s:form>
 		</div>
 		<div  id="vehicleUsages-added">
@@ -220,8 +192,8 @@
 								<tr>
 									<th class="span2">车牌号-司机</th>
 									<th>使用日期</th>
-									<th>开始量程</th>
-									<th>结束量程</th>
+									<th>开始里程</th>
+									<th>结束里程</th>
 									<th>起始地点</th>
 									<th>到达地点</th>
 									<th>&nbsp;</th>

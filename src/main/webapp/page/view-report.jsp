@@ -17,19 +17,7 @@
 <body>
   <div class="row">
   <s:set id="commented" value="commented"/>
-  <security:authorize ifAnyGranted="ROLE_HEAD"> 
-    <s:if test="#commented == false">
-  <div class="span11">
-	 		<s:form theme="simple" action="save-comment.action" id="commentForm" method="post">
-	 				<input type="hidden" name="reportId" value="<s:property value='report.id'/>"/>
-	 				<s:textarea theme="simple" id="txtCom" name="commen" cols="50" cssClass="span6" rows="2"  />
-	 				<div >
-	 				<button class="btn btn-primary" id="btnCom" type="submit">评阅</button>
-	 				</div>
-	 	 </s:form>
-  </div>
-    </s:if>
-    </security:authorize>
+
     <div class="span11">
  	<table class="table" >
  		<caption><b>周报内容</b></caption>
@@ -73,6 +61,24 @@
  				</td>
  			</tr>
  			</s:if>
+ 			<s:else>
+ 			<tr>
+ 				<th>评语</th>
+ 				<td colspan="3">
+ 					<security:authorize ifAnyGranted="ROLE_HEAD"> 
+					    <s:if test="#commented == false">
+						 		<s:form theme="simple" action="save-comment.action" id="commentForm" method="post">
+						 				<div >
+						 				<input type="hidden" name="reportId" value="<s:property value='report.id'/>"/>
+						 				<s:textarea theme="simple" id="txtCom" name="commen" cols="50" cssClass="span6" rows="2"  />
+						 				<button class="btn" id="btnCom" type="submit">审阅</button>
+						 				</div>
+						 	 </s:form>
+					    </s:if>
+					</security:authorize>
+ 				</td>
+ 			</tr>
+ 			</s:else>
  			<tr>
  				<th >附件</th>
  				<td colspan="3">
@@ -90,13 +96,13 @@
 	
 	<div class="span12">
 	<table class="table">
-		<caption><b>车辆使用情况</b></caption>
+		<caption><b>车辆使用情况(总共)</b></caption>
 		<thead>
 			<th class="span2">车牌号</th>
 			<th class="span1">司机</th>
 			<th class="span2">使用日期</th>
-			<th class="span2">开始量程</th>
-			<th class="span2">结束量程</th>
+			<th class="span2">开始里程</th>
+			<th class="span2">结束里程</th>
 			<th class="span2">起始地点</th>
 			<th class="span2">到达地点</th>
 		</thead>

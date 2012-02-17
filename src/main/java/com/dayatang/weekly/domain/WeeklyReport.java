@@ -77,11 +77,124 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 	@Column(name = "comment_date")
 	private Date commentDate;
 
-	@OneToMany(mappedBy="report")
-	private List<VehicleUsage> vehicleUsages ;
+	@OneToMany(mappedBy = "report")
+	private List<VehicleUsage> vehicleUsages;
 
 	@Transient
 	private ResourceBundle resourceBundle = ResourceBundle.getBundle("ApplicationResources", Locale.CHINA);
+
+	public void saveAsDraft() {
+		setStatus(STATUS_DRAFT);
+		this.save();
+	}
+
+	public void submit() {
+		setStatus(STATUS_SUBMITTED);
+		setSubmitDate(new Date());
+		this.save();
+	}
+
+	public void makeComment() {
+		setStatus(STATUS_COMMENTED);
+		setCommentDate(new Date());
+		this.save();
+	}
+
+	public static WeeklyReport get(Long id) {
+		return getRepository().get(WeeklyReport.class, id);
+	}
+
+	public static List<WeeklyReport> search(QuerySettings<WeeklyReport> querySettings) {
+		List<WeeklyReport> results = new ArrayList<WeeklyReport>();
+		results.addAll(getRepository().find(querySettings));
+		return results;
+	}
+
+	public static List<WeeklyReport> search(User author, String projectName, String firstName, String lastName, Date fromDate, Date toDate, List<Integer> status) {
+		List<WeeklyReport> results = new ArrayList<WeeklyReport>();
+		QuerySettings<WeeklyReport> query = QuerySettings.create(WeeklyReport.class).desc("id");
+		query.in("status", status);
+
+		if (StringUtils.isNotEmpty(projectName)) {
+			query.containsText("projectName", projectName);
+		}
+
+		if (StringUtils.isNotEmpty(firstName)) {
+			query.eq("author.firstName", firstName);
+		}
+
+		if (StringUtils.isNotEmpty(lastName)) {
+			query.eq("author.lastName", lastName);
+		}
+
+		if (fromDate != null) {
+			query.ge("submitDate", fromDate);
+		}
+
+		if (toDate != null) {
+			query.le("submitDate", toDate);
+		}
+		
+		if(author != null){
+			query.eq("author", author);
+		}
+		results.addAll(WeeklyReport.search(query));
+		return results;
+	}
+
+	public static List<WeeklyReport> findAll(Integer[] status) {
+		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).desc("submitDate").desc("id");
+		if (status.length > 0) {
+			querySettings = querySettings.in("status", status);
+		}
+		return getRepository().find(querySettings);
+	}
+
+	public static List<WeeklyReport> findByAuthor(User user, Integer status[]) {
+		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).eq("author.id", user.getId()).desc("id");
+		if (status.length > 0) {
+			querySettings = querySettings.in("status", status);
+		}
+		return getRepository().find(querySettings);
+	}
+
+	public static WeeklyReport findTheLastOne(User user, Integer status[]) {
+		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).eq("author.id", user.getId()).desc("id");
+		if (status.length > 0) {
+			querySettings = querySettings.in("status", status);
+		}
+		return getRepository().getSingleResult(querySettings);
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("projectName", projectName).append("author", author).append("fromDate", fromDate).append("toDate", toDate).toString();
+	}
+
+	@Override
+	public boolean equals(final Object other) {
+		if (!(other instanceof WeeklyReport))
+			return false;
+		WeeklyReport castOther = (WeeklyReport) other;
+		return new EqualsBuilder().append(projectName, castOther.projectName).append(fromDate, castOther.fromDate).isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(projectName).append(fromDate).toHashCode();
+	}
+
+	public int compareTo(WeeklyReport other) {
+		return -this.getFromDate().compareTo(other.getFromDate());
+	}
+
+	public boolean isAllowEditBy(User user) {
+		return getAuthor().equals(user) && getStatus() == WeeklyReport.STATUS_DRAFT;
+	}
+
+	public boolean isAllowCommentBy(User user) {
+		return user.getRoles().contains(Role.ROLE_HEAD) && getStatus() > WeeklyReport.STATUS_DRAFT;
+	}
 
 	public WeeklyReport() {
 	}
@@ -227,105 +340,6 @@ public class WeeklyReport extends AbstractEntity implements Comparable<WeeklyRep
 			return resourceBundle.getString("weeklyReport.status.commented");
 		}
 		return "";
-	}
-
-	public void saveAsDraft() {
-		setStatus(STATUS_DRAFT);
-		this.save();
-	}
-
-	public void submit() {
-		setStatus(STATUS_SUBMITTED);
-		setSubmitDate(new Date());
-		this.save();
-	}
-
-	public void makeComment() {
-		setStatus(STATUS_COMMENTED);
-		setCommentDate(new Date());
-		this.save();
-	}
-
-	public static WeeklyReport get(Long id) {
-		return getRepository().get(WeeklyReport.class, id);
-	}
-
-	public static List<WeeklyReport> findAll(Integer[] status) {
-		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).desc("submitDate").desc("id");
-		if (status.length > 0) {
-			querySettings = querySettings.in("status", status);
-		}
-		return getRepository().find(querySettings);
-	}
-
-	public static List<WeeklyReport> findByAuthor(User user, Integer status[]) {
-		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).eq("author.id", user.getId()).desc("id");
-		if (status.length > 0) {
-			querySettings = querySettings.in("status", status);
-		}
-		return getRepository().find(querySettings);
-	}
-
-	public static WeeklyReport findTheLastOne(User user, Integer status[]) {
-		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).eq("author.id", user.getId()).desc("id");
-		if (status.length > 0) {
-			querySettings = querySettings.in("status", status);
-		}
-		return getRepository().getSingleResult(querySettings);
-	}
-
-	
-	public static List<WeeklyReport> findByExample(WeeklyReport report, final Date fromDate, final Date toDate) {
-		QuerySettings<WeeklyReport> querySettings = QuerySettings.create(WeeklyReport.class).desc("submitDate");
-		if (report.getAuthor() != null && !StringUtils.isEmpty(report.getAuthor().getUsername())) {
-			querySettings = querySettings.eq("author.lastName", report.getAuthor().getUsername());
-		}
-		if (!StringUtils.isEmpty(report.getProjectName())) {
-			querySettings = querySettings.eq("projectName", report.getProjectName());
-		}
-		if (!StringUtils.isEmpty(report.getWorkPlace())) {
-			querySettings = querySettings.eq("workPlace", report.getWorkPlace());
-		}
-		if (report.getStatus() > 0) {
-			querySettings = querySettings.eq("status", report.getStatus());
-		}
-		if (fromDate != null) {
-			querySettings = querySettings.ge("submitDate", fromDate);
-		}
-		if (toDate != null) {
-			querySettings = querySettings.le("submitDate", toDate);
-		}
-		return getRepository().find(querySettings);
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("projectName", projectName).append("author", author).append("fromDate", fromDate).append("toDate", toDate).toString();
-	}
-
-	@Override
-	public boolean equals(final Object other) {
-		if (!(other instanceof WeeklyReport))
-			return false;
-		WeeklyReport castOther = (WeeklyReport) other;
-		return new EqualsBuilder().append(projectName, castOther.projectName).append(fromDate, castOther.fromDate).isEquals();
-	}
-
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(projectName).append(fromDate).toHashCode();
-	}
-
-	public int compareTo(WeeklyReport other) {
-		return -this.getFromDate().compareTo(other.getFromDate());
-	}
-
-	public boolean isAllowEditBy(User user) {
-		return getAuthor().equals(user) && getStatus() == WeeklyReport.STATUS_DRAFT;
-	}
-
-	public boolean isAllowCommentBy(User user) {
-		return user.getRoles().contains(Role.ROLE_HEAD) && getStatus() > WeeklyReport.STATUS_DRAFT;
 	}
 
 }

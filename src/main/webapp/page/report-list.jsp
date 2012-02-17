@@ -1,31 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="styles/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="styles/themes/icon.css"> 
+<script type="text/javascript" src="js/locale/easyui-lang-zh_TW.js"  charset="utf-8" ></script>
+	<script type="text/javascript">
+	
+	$(function(){
+		
+		
+		$(".datebox").datebox({
+			formatter: function(date){ return date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(); }
+		});	
+	});
+	</script>
 	<title> 周报列表 </title>
 </head>
 <body>
+
+
 <div class="container-fluid">
-<div class="row span10">
-<div style="margin-top: 18px;" class="btn-toolbar">
-        <div class="btn-group">
-          <!-- 老板 -->
-          <security:authorize ifAnyGranted="ROLE_MANAGER"> 
-   			  <a href="#" class="btn">待批阅</a>
-	          <a href="#" class="btn">历史</a>
-          </security:authorize>
-          <!-- 员工 -->
-          <security:authorize ifAnyGranted="ROLE_HEAD">
-              <a href="#" class="btn">待呈报</a>
-	          <a href="#" class="btn">已批阅</a>
-          </security:authorize> 
-	          <a href="#" class="btn">查找</a>
-        </div>
-      </div>
+<div class="row span11">
+<!-- 搜索框 -->
+<s:form theme="simple" action="report-list.action" cssClass="form-search">
+			  <label>
+			  		项目名&nbsp;<input type="text" class="search-query" name="projectName"/>
+			  </label>
+			  
+			  &nbsp;
+			  <label >
+					呈报人&nbsp;<input type="text" class="input-mini  search-query" name="userRealName">
+			  </label>
+			  
+			  &nbsp;
+			  <label>
+			  		时间范围&nbsp;<input type="text"  class="input-mini   datebox" name="fromDate" style="width:90px;"/>&nbsp;至&nbsp;
+			  					<input type="text"   class="input-mini  datebox" name="toDate"  style="width:90px;"/>
+			  </label>
+			  
+			  &nbsp;
+              <label class="checkbox">
+                <input type="checkbox" checked="" value="false" id="optionsRadios1"  name="read">
+                未审阅
+              </label>
+              &nbsp;
+              <input name="search" type="hidden" value="true"/>
+   			  <button type="submit" class="btn">搜索</button>
+</s:form>
 </div>
+
+
+<!-- 周报显示 -->
 <div	class="row span10">
 		<display:table name="reports" requestURI="/report-list.action"  id="report" pagesize="15" class="table" export="true">
 		<s:set id="DRAFT" value="%{@com.dayatang.weekly.domain.WeeklyReport@STATUS_DRAFT}" />
